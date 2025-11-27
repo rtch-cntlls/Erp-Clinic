@@ -1,68 +1,86 @@
 body {
-    min-height: 100vh;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Inter', sans-serif;
     background-color: #f8f9fa;
+    margin: 0;
+    overflow-x: hidden;
 }
+
 .sidebar {
     width: 220px;
     height: 100vh;
+    background-color: #ffffff;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.05);
     position: fixed;
-    background-color: #1e1e2f;
-    color: #fff;
-    transition: all 0.3s;
+    top: 0;
+    left: 0;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0,0,0,0.2) transparent;
 }
+
+.sidebar::-webkit-scrollbar {
+    width: 2px;
+}
+.sidebar::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,0.2);
+    border-radius: 3px;
+}
+
 .sidebar h4 {
-    font-weight: 600;
-    letter-spacing: 1px;
+    font-weight: 700;
     margin-bottom: 1rem;
-    padding: 1rem 0;
-    background-color: #27293d;
+    color: #0d6efd;
 }
+
 .sidebar a {
-    color: #ced4da;
-    text-decoration: none;
     display: flex;
     align-items: center;
-    padding: 10px 20px;
+    padding: 12px 20px;
+    color: #495057;
     font-weight: 500;
     border-radius: 8px;
-    margin: 4px 10px;
+    margin: 4px 12px;
+    text-decoration: none;
     transition: all 0.2s;
 }
+
 .sidebar a i {
     margin-right: 10px;
     font-size: 1.2rem;
 }
+
 .sidebar a:hover {
-    background-color: #343a50;
-    color: #fff;
-}
-.sidebar .active {
-    background-color: #6366f1;
-    color: #fff;
-}
-.sidebar form button {
-    width: 90%;
-    margin: 0 auto;
-    border-radius: 8px;
-}
-.content {
-    margin-left: 220px;
-    padding: 25px;
-}
-.card {
-    border-radius: 12px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    background-color: #e7f1ff;
+    color: #0d6efd;
 }
 
-.card h5 {
+.sidebar a.active {
+    background-color: #0d6efd;
+    color: #fff;
     font-weight: 600;
 }
-@media(max-width: 768px){
+
+.sidebar form button {
+    width: 80%;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+}
+
+.content {
+    margin-left: 220px;
+    padding: 30px;
+}
+
+@media (max-width: 768px) {
     .sidebar {
         width: 100%;
         height: auto;
         position: relative;
+        box-shadow: none;
+        overflow-y: visible;
     }
     .content {
         margin-left: 0;

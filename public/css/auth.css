@@ -1,0 +1,37 @@
+body {
+    background-color: #f8f9fa;
+}
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.login-card {
+    display: flex;
+    width: 900px;
+    min-height: 500px;
+    overflow: hidden;
+    background-color: #fff;
+}
+.login-image {
+    flex: 1;
+    color: #fff;
+}
+.login-form {
+    flex: 1;
+    padding: 50px;
+}
+.container input{
+    font-size: 15px;
+}
+@media (max-width: 768px) {
+    .login-card {
+        flex-direction: column;
+        width: 90%;
+        min-height: auto;
+    }
+    .login-image {
+        display: none;
+    }
+}

@@ -22,6 +22,11 @@ class Patient extends Model
         'dob' => 'date',
     ];
 
+    public function getFullNameAttribute()
+    {
+        return "{$this->first_name} {$this->last_name}";
+    }
+
     public function visits()
     {
         return $this->hasMany(PatientVisit::class)->orderBy('visit_date', 'desc');
