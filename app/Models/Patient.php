@@ -21,4 +21,10 @@ class Patient extends Model
     protected $casts = [
         'dob' => 'date',
     ];
+
+    public function visits()
+    {
+        return $this->hasMany(PatientVisit::class)->orderBy('visit_date', 'desc');
+    }
+
 }

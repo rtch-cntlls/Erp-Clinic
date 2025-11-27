@@ -2,73 +2,88 @@
 @section('title', 'Patients')
 @section('content')
 <div class="container">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h4 class="mb-0 fw-bold">Patients Management</h4>
+    <div class="d-flex justify-content-between align-items-center">
+        <h3 class="fw-bold text-dark"><i class="bi bi-people-fill me-2"></i>Patients Management</h3>
         <a href="{{ route('admin.patients.create') }}" class="btn btn-primary d-flex align-items-center">
             <i class="bi bi-plus-circle me-2"></i> Add Patient
         </a>
     </div>
+    <div class="row g-3 mt-2">
+        <div class="col-md-4">
+            <div class="p-3 border shadow-sm text-center">
+                <h6 class="text-muted mb-1">Total Patients</h6>
+                <h4 class="fw-bold">{{ $patients->total() }}</h4>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="p-3 border shadow-sm text-center">
+                <h6 class="text-muted mb-1">Male Patients</h6>
+                <h4 class="fw-bold text-primary">{{ $patients->where('gender', 'male')->count() }}</h4>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="p-3 border shadow-sm text-center">
+                <h6 class="text-muted mb-1">Female Patients</h6>
+                <h4 class="fw-bold text-danger">{{ $patients->where('gender', 'female')->count() }}</h4>
+            </div>
+        </div>
     <form method="GET" action="{{ route('admin.patients.index') }}" class="mb-4">
-        <div class="input-group shadow-sm">
-            <input type="text" name="search" value="{{ request('search') }}" class="form-control" placeholder="Search by name, email, or phone">
-            <button type="submit" class="btn btn-outline-secondary"><i class="bi bi-search"></i> Search</button>
+        <div class="input-group rounded-3 shadow-sm" style="overflow: hidden;">
+            <input type="text" name="search" value="{{ request('search') }}" class="form-control border-0" placeholder="Search by name, email, or phone">
+            <button type="submit" class="btn btn-outline-secondary"><i class="bi bi-search me-1"></i> Search</button>
         </div>
     </form>
     @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+        <div class="alert alert-success alert-dismissible fade show shadow-sm rounded-3" role="alert">
             {{ session('success') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     @endif
-    <div class="card shadow-sm rounded-4">
-        <div class="card-body p-0">
-            <table class="table table-hover align-middle mb-0">
-                <thead class="table-light">
-                    <tr>
-                        <th>#</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>Gender</th>
-                        <th>DOB</th>
-                        <th class="text-center">Actions</th>
+    <div class="table-responsive shadow-sm" style="background-color: #fdfdfd;">
+        <table class="table table-borderless align-middle mb-0">
+            <thead class="bg-light">
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Gender</th>
+                    <th>DOB</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($patients as $patient)
+                    <tr class="align-middle">
+                        <td>{{ $patient->id }}</td>
+                        <td class="fw-semibold">{{ $patient->first_name }} {{ $patient->last_name }}</td>
+                        <td>{{ $patient->email ?? '-' }}</td>
+                        <td>{{ $patient->phone ?? '-' }}</td>
+                        <td>
+                            @if($patient->gender)
+                                <span class="badge bg-info text-dark">{{ ucfirst($patient->gender) }}</span>
+                            @else
+                                <span class="text-muted">-</span>
+                            @endif
+                        </td>
+                        <td>{{ $patient->dob ? $patient->dob->format('M. d, Y') : '-' }}</td>
+                        <td class="text-center">
+                            <a href="{{ route('admin.patients.show', $patient->id) }}" class="btn btn-sm btn-primary" title="View">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    @forelse($patients as $patient)
-                        <tr>
-                            <td>{{ $patient->id }}</td>
-                            <td class="fw-semibold">{{ $patient->first_name }} {{ $patient->last_name }}</td>
-                            <td>{{ $patient->email ?? '-' }}</td>
-                            <td>{{ $patient->phone ?? '-' }}</td>
-                            <td>
-                                @if($patient->gender)
-                                    <span class="badge bg-info text-dark">{{ ucfirst($patient->gender) }}</span>
-                                @else
-                                    <span class="text-muted">-</span>
-                                @endif
-                            </td>
-                            <td>{{ $patient->dob ? $patient->dob->format('d M, Y') : '-' }}</td>
-                            <td class="text-center">
-                                <a href="{{ route('admin.patients.show', $patient->id) }}" class="btn btn-sm btn-outline-info me-1" title="View">
-                                    <i class="bi bi-eye"></i>
-                                </a>
-                                <a href="{{ route('admin.patients.edit', $patient->id) }}" class="btn btn-sm btn-outline-warning me-1" title="Edit">
-                                    <i class="bi bi-pencil"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="7" class="text-center text-muted py-4">No patients found.</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
+                @empty
+                    <tr>
+                        <td colspan="7" class="text-center text-muted py-4">No patients found.</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
     </div>
     <div class="mt-4 d-flex justify-content-end">
         {{ $patients->withQueryString()->links('pagination::bootstrap-5') }}
+    </div>
     </div>
 </div>
 @endsection

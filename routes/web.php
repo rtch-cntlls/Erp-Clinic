@@ -3,6 +3,7 @@
 use App\Http\Middleware\AdminAuth;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\PatientController;
+use App\Http\Controllers\Admin\PatientVisitController;
 use App\Http\Controllers\Auth\AdminLoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +28,7 @@ Route::middleware([AdminAuth::class])->group(function () {
         Route::put('/{patient}', [PatientController::class, 'update'])->name('update');
         Route::get('/{patient}', [PatientController::class, 'show'])->name('show');
         Route::delete('/{patient}', [PatientController::class, 'destroy'])->name('destroy');
+        Route::post('/{patient}/visits', [PatientVisitController::class, 'store'])->name('visits.store');
     });
 
 });

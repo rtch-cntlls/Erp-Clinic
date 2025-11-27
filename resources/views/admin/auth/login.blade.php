@@ -74,9 +74,6 @@
                     </form>
 
                 </div>
-                <div class="card-footer text-center small text-muted">
-                    © 2025 Clinic ERP. All rights reserved.
-                </div>
             </div>
         </div>
     </div>
