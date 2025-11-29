@@ -15,6 +15,7 @@ use App\Http\Controllers\Auth\AdminLoginController;
 use App\Http\Middleware\DoctorAuth;
 use App\Http\Controllers\Doctor\DoctorDashboardController;
 use App\Http\Controllers\Doctor\DoctorProfileController;
+use App\Http\Controllers\Doctor\DoctorPatientController;
 
 Route::get('admin/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
 Route::post('admin/login', [AdminLoginController::class, 'login'])->name('admin.login.post');
@@ -80,9 +81,18 @@ Route::middleware([AdminAuth::class])->group(function () {
             Route::get('/dashboard', [DoctorDashboardController::class, 'index'])->name('index');
         });
 
-        Route::prefix('doctor/profile')->name('doctor.profile.')->middleware([DoctorAuth::class])->group(function () {
+        Route::prefix('doctor/profile')->name('doctor.profile.')->group(function () {
             Route::get('/', [DoctorProfileController::class, 'index'])->name('index');
             Route::post('/schedule/store', [DoctorProfileController::class, 'store'])->name('schedule.store');
-        });        
+        });   
+        
+        Route::prefix('doctor/patients')->name('doctor.patients.')->group(function () {
+            Route::get('/', [DoctorPatientController::class, 'index'])->name('index');
+            Route::get('/{patients}', [DoctorPatientController::class, 'show'])->name('show');
+            Route::post('/{id}/visit/store', [DoctorPatientController::class, 'storeVisit'])->name('visits.store');
+            Route::post('/patients/{id}/prescriptions/store', [DoctorPatientController::class, 'storePrescription'])->name('prescriptions.store');
+
+        });
+        
     });
 });

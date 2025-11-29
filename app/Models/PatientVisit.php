@@ -11,7 +11,6 @@ class PatientVisit extends Model
         'visit_date',
         'action',
         'findings',
-        'created_by',
     ];
 
     protected $casts = [

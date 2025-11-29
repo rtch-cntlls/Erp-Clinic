@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Services\Admin\PatientService;
 use Illuminate\Http\Request;
+use App\Models\Patient;
 
 class PatientController extends Controller
 {
@@ -19,6 +20,11 @@ class PatientController extends Controller
     {
         $data = $this->service->listPatients($request);
         return view('admin.pages.patients.index', $data);
+    }
+
+    public function create()
+    {
+        return view('admin.pages.patients.create');
     }
 
     public function store(Request $request)
