@@ -2,52 +2,24 @@
 @section('title', 'Billing')
 @section('content')
 <div class="container">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h3 class="fw-bold">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <h4 class="fw-bold">
             <i class="bi bi-receipt-cutoff me-2"></i> Billing Management
-        </h3>
-        <a href="{{ route('admin.billing.create') }}" class="btn btn-primary d-flex align-items-center">
+        </h4>
+        {{-- <a href="{{ route('admin.billing.create') }}" class="btn btn-primary d-flex align-items-center">
             <i class="bi bi-plus-circle me-1"></i> New Bill
-        </a>
+        </a> --}}
     </div>
     <div class="row g-3 mb-4">
-        <div class="col-md-3">
-            <div class="card shadow-sm p-3 text-center">
-                <i class="bi bi-card-list fs-2 text-primary mb-2"></i>
-                <h6 class="text-muted mb-1">Total Bills</h6>
-                <h4 class="fw-bold">{{ $billings->total() }}</h4>
+        @foreach ($cards as $card)
+            <div class="col-md-3">
+                <div class="card shadow-sm p-3 text-center">
+                    <i class="bi {{ $card['icon'] }} fs-2 {{ $card['color'] }} mb-2"></i>
+                    <h6 class="text-muted mb-1">{{ $card['title'] }}</h6>
+                    <h4 class="fw-bold {{ $card['color'] }}">{{ $card['value'] }}</h4>
+                </div>
             </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="card shadow-sm p-3 text-center">
-                <i class="bi bi-check-circle fs-2 text-success mb-2"></i>
-                <h6 class="text-muted mb-1">Paid Bills</h6>
-                <h4 class="fw-bold text-success">
-                    {{ $billings->where('status', 'paid')->count() }}
-                </h4>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="card shadow-sm p-3 text-center">
-                <i class="bi bi-hourglass-split fs-2 text-warning mb-2"></i>
-                <h6 class="text-muted mb-1">Pending Bills</h6>
-                <h4 class="fw-bold text-warning">
-                    {{ $billings->where('status', 'pending')->count() }}
-                </h4>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="card shadow-sm p-3 text-center">
-                <i class="bi bi-cash-stack fs-2 text-success mb-2"></i>
-                <h6 class="text-muted mb-1">Total Revenue</h6>
-                <h4 class="fw-bold text-success">
-                    ₱{{ number_format($billings->where('status','paid')->sum('amount'), 2) }}
-                </h4>
-            </div>
-        </div>
+        @endforeach
     </div>
     <div class="card shadow-sm">
         <div class="card-body p-0">
@@ -55,7 +27,6 @@
                 <table class="table table-hover align-middle mb-0">
                     <thead class="table-light">
                         <tr>
-                            <th></th>
                             <th>Patient</th>
                             <th>Amount</th>
                             <th>Status</th>
@@ -68,7 +39,6 @@
                     <tbody>
                         @forelse ($billings as $billing)
                         <tr>
-                            <td>{{ $billing->id }}</td>
                             <td>{{ $billing->patient->full_name }}</td>
                             <td class="fw-semibold">₱{{ number_format($billing->amount, 2) }}</td>
                             <td>

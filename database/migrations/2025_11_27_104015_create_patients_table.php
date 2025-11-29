@@ -20,6 +20,10 @@ return new class extends Migration
             $table->date('dob')->nullable();
             $table->enum('gender', ['male', 'female', 'other'])->nullable();
             $table->text('address')->nullable();
+            $table->string('emergency_contact')->nullable();
+            $table->string('insurance')->nullable();
+            $table->text('allergies')->nullable();
+            $table->text('medications')->nullable();
             $table->string('blood_group')->nullable();
             $table->text('medical_history')->nullable();
             $table->timestamps();

@@ -6,8 +6,8 @@
         <h3 class="fw-bold text-dark">
             <i class="bi bi-receipt me-2"></i> New Billing Record
         </h3>
-        <a href="{{ route('admin.billing.index') }}" class="btn btn-secondary">
-            <i class="bi bi-arrow-left"></i> Back
+        <a href="{{ route('admin.billing.index') }}" class="btn btn-outline-secondary btn-sm me-2">
+            <i class="bi bi-arrow-left-circle me-1"></i> Back
         </a>
     </div>
     @if($errors->any())

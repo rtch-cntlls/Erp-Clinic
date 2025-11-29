@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
 </head>
 <body>
-    <div class="sidebar d-flex flex-column">
+    <div class="sidebar d-flex flex-column p-3">
         <div class="d-flex justify-content-center align-items-center">
             <img src="{{ asset('images/logo.png') }}" alt="CarePoint Logo" style="width: 50px; height: auto; margin-right: 10px;">
             <h5 class="fw-bold text-primary mb-0">CarePoint</h5>
@@ -38,9 +38,11 @@
         </a>
         <a href="#"><i class="bi bi-people"></i> HR</a>
         <a href="#"><i class="bi bi-graph-up"></i> Reports</a>
-        <form action="" method="POST" class="mt-auto mb-3 text-center">
+        <form action="" method="POST" class="mt-auto text-center">
             @csrf
-            <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-box-arrow-right"></i> Logout</button>
+            <button type="submit" class="btn btn-danger btn-sm mt-3">
+                <i class="bi bi-box-arrow-right"></i> Logout
+            </button>
         </form>
     </div>
     <div class="content">

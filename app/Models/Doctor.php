@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class Doctor extends Model
+class Doctor extends Authenticatable
 {
+    use Notifiable;
+
     protected $table = 'doctors';
     protected $fillable = [
         'name',
@@ -20,5 +23,10 @@ class Doctor extends Model
     public function appointments()
     {
         return $this->hasMany(Appointment::class);
+    }
+    
+    public function schedules()
+    {
+        return $this->hasMany(DoctorSchedule::class);
     }
 }

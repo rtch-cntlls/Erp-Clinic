@@ -30,12 +30,10 @@
                         <div class="col-md-6">
                             <label class="form-label">Expiry Date</label>
                             <input type="date" name="expiry_date" class="form-control" value="{{ $item->expiry_date?->format('Y-m-d') }}">
-                            <small class="text-muted">Optional: Set expiry date if applicable</small>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Low Stock Threshold</label>
                             <input type="number" name="low_stock_threshold" class="form-control" value="{{ $item->low_stock_threshold }}">
-                            <small class="text-muted">Quantity below this triggers low stock badge</small>
                         </div>
                     </div>
                 </div>

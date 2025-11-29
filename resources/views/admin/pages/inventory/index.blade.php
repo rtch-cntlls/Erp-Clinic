@@ -2,49 +2,29 @@
 @section('title', 'Inventory')
 @section('content')
 <div class="container">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h3 class="fw-bold text-dark"><i class="bi bi-box-seam me-2"></i>Inventory Management</h3>
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <h4 class="fw-bold text-dark"><i class="bi bi-box-seam me-2"></i>Inventory Management</h4>
         <button class="btn btn-primary d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#addItemModal">
             <i class="bi bi-plus-circle me-1"></i> Add Item
         </button>
     </div>
     <div class="row g-3 mb-4">
-        <div class="col-md-3">
-            <div class="card shadow-sm p-3 text-center">
-                <i class="bi bi-box fs-2 text-primary mb-2"></i>
-                <h6 class="text-muted mb-1">Total Items</h6>
-                <h4 class="fw-bold">{{ $inventory->count() }}</h4>
+        @foreach($cards as $card)
+            <div class="col-md-3">
+                <div class="card shadow-sm p-3 text-center">
+                    <i class="bi {{ $card['icon'] }} fs-2 {{ $card['color'] }} mb-2"></i>
+                    <h6 class="text-muted mb-1">{{ $card['title'] }}</h6>
+                    <h4 class="fw-bold">{{ $card['value'] }}</h4>
+                </div>
             </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card shadow-sm p-3 text-center">
-                <i class="bi bi-exclamation-triangle fs-2 text-danger mb-2"></i>
-                <h6 class="text-muted mb-1">Low Stock</h6>
-                <h4 class="fw-bold text-danger">{{ $inventory->where('quantity', '<=', 'low_stock_threshold')->count() }}</h4>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card shadow-sm p-3 text-center">
-                <i class="bi bi-tags fs-2 text-warning mb-2"></i>
-                <h6 class="text-muted mb-1">Categories</h6>
-                <h4 class="fw-bold">{{ $inventory->pluck('category')->unique()->count() }}</h4>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card shadow-sm p-3 text-center">
-                <i class="bi bi-calendar-x fs-2 text-secondary mb-2"></i>
-                <h6 class="text-muted mb-1">Expired Items</h6>
-                <h4 class="fw-bold text-secondary">{{ $inventory->where('expiry_date', '<', now())->count() }}</h4>
-            </div>
-        </div>
-    </div>
+        @endforeach
+    </div>    
     <div class="card shadow-sm">
         <div class="card-body p-0">
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0">
                     <thead class="table-light">
                         <tr>
-                            <th></th>
                             <th>Item Name</th>
                             <th>Category</th>
                             <th>Quantity</th>
@@ -57,7 +37,6 @@
                     <tbody>
                         @forelse($inventory as $item)
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->category }}</td>
                                 <td>{{ $item->quantity }}</td>

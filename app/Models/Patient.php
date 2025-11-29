@@ -16,7 +16,11 @@ class Patient extends Model
         'address',
         'blood_group',
         'medical_history',
-    ];
+        'emergency_contact',
+        'insurance',
+        'allergies',
+        'medications',
+    ];    
 
     protected $casts = [
         'dob' => 'date',
@@ -32,4 +36,8 @@ class Patient extends Model
         return $this->hasMany(PatientVisit::class)->orderBy('visit_date', 'desc');
     }
 
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class)->orderBy('appointment_date', 'asc');
+    }
 }

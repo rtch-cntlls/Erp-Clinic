@@ -2,50 +2,29 @@
 @section('title', 'Doctors')
 @section('content')
 <div class="container">
-    <!-- Header & Stats -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h3 class="fw-bold text-dark">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <h4 class="fw-bold text-dark">
             <i class="bi bi-person-badge me-2"></i> Doctors Management
-        </h3>   
+        </h4>   
         <a href="{{ route('admin.doctors.create') }}" class="btn btn-primary d-flex align-items-center">
             <i class="bi bi-plus-circle me-1"></i> Add Doctor
         </a>
     </div>
-
-    <!-- Stats Cards -->
     <div class="row g-3 mb-4">
-        <div class="col-md-3">
-            <div class="card shadow-sm p-3 text-center">
-                <i class="bi bi-person-lines-fill fs-2 text-primary mb-2"></i>
-                <h6 class="text-muted mb-1">Total Doctors</h6>
-                <h4 class="fw-bold">{{ $doctors->total() }}</h4>
+        @foreach($cards as $card)
+            <div class="col-md-3">
+                <div class="card shadow-sm p-3 text-center">
+                    <i class="bi {{ $card['icon'] }} fs-2 {{ $card['color'] }} mb-2"></i>
+                    <h6 class="text-muted mb-1">{{ $card['title'] }}</h6>
+                    <h4 class="fw-bold">{{ $card['value'] }}</h4>
+                </div>
             </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card shadow-sm p-3 text-center">
-                <i class="bi bi-person-check fs-2 text-success mb-2"></i>
-                <h6 class="text-muted mb-1">Active</h6>
-                <h4 class="fw-bold text-success">{{ $doctors->where('status', 'active')->count() }}</h4>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card shadow-sm p-3 text-center">
-                <i class="bi bi-person-x fs-2 text-danger mb-2"></i>
-                <h6 class="text-muted mb-1">Inactive</h6>
-                <h4 class="fw-bold text-danger">{{ $doctors->where('status', 'inactive')->count() }}</h4>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card shadow-sm p-3 text-center">
-                <i class="bi bi-star fs-2 text-warning mb-2"></i>
-                <h6 class="text-muted mb-1">Specializations</h6>
-                <h4 class="fw-bold">{{ $doctors->pluck('specialization')->unique()->count() }}</h4>
-            </div>
-        </div>
-    </div>
-
-    <!-- Doctors Table -->
+        @endforeach
+    </div>    
     <div class="card shadow-sm">
+        <div class="card-header">
+            <h6 class="mb-0"><i class="bi bi-person-badge me-2"></i>Doctors List</h6>
+        </div>
         <div class="card-body p-0">
             @if(session('success'))
                 <div class="alert alert-success m-3">{{ session('success') }}</div>

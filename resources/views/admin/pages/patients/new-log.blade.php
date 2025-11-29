@@ -13,17 +13,17 @@
                     <div class="mb-3">
                         <label for="visit_date" class="form-label small fw-semibold">Visit Date</label>
                         <input type="date" name="visit_date" id="visit_date" class="form-control" required>
-                        <small class="text-danger" style="font-size: 12px;">Select the date of the patient's visit.</small>
+                        <small style="font-size: 12px;">Select the date of the patient's visit.</small>
                     </div>
                     <div class="mb-3">
                         <label for="action" class="form-label small fw-semibold">Action / Checkup</label>
                         <input type="text" name="action" id="action" class="form-control" placeholder="e.g., General Checkup, Lab Test" required>
-                        <small class="text-danger" style="font-size: 12px;">Describe the procedure or examination performed.</small>
+                        <small style="font-size: 12px;">Describe the procedure or examination performed.</small>
                     </div>
                     <div class="mb-3">
                         <label for="findings" class="form-label small fw-semibold">Findings</label>
                         <textarea name="findings" id="findings" class="form-control" rows="3" placeholder="Enter doctor's notes or observations"></textarea>
-                        <small class="text-danger" style="font-size: 12px;">Optional: Summarize important notes or recommendations.</small>
+                        <small style="font-size: 12px;">Optional: Summarize important notes or recommendations.</small>
                     </div>
                 </div>
                 <div class="modal-footer border-0">

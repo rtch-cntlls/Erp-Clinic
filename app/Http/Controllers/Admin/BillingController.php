@@ -3,18 +3,27 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Billing;
 use App\Models\Patient;
 use App\Models\Appointment;
+use App\Services\Admin\BillingService;
+use App\Models\Billing;
+use Illuminate\Http\Request;
 
 class BillingController extends Controller
 {
+    protected $billingService;
+
+    public function __construct(BillingService $billingService)
+    {
+        $this->billingService = $billingService;
+    }
+
     public function index()
     {
         $billings = Billing::with('patient')->orderBy('id', 'desc')->paginate(10);
+        $cards = $this->billingService->getDashboardCards();
 
-        return view('admin.pages.billing.index', compact('billings'));
+        return view('admin.pages.billing.index', compact('billings', 'cards'));
     }
 
     public function create()
@@ -33,17 +42,10 @@ class BillingController extends Controller
             'payment_method' => 'nullable|string',
         ]);
 
-        Billing::create([
-            'patient_id' => $request->patient_id,
-            'appointment_id' => $request->appointment_id,
-            'amount' => $request->amount,
-            'status' => 'paid',
-            'payment_method' => $request->payment_method,
-            'notes' => $request->notes
-        ]);
+        $this->billingService->createBilling($request->all());
 
         return redirect()->route('admin.billing.index')
-            ->with('success', 'Billing record created successfully.');
+                         ->with('success', 'Billing record created successfully.');
     }
 
     public function show($id)
