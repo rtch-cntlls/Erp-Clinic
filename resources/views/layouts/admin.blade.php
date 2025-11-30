@@ -30,6 +30,9 @@
         <a href="{{ route('admin.pharmacy.index') }}" class="{{ request()->routeIs('admin.pharmacy.*') ? 'active' : '' }}">
             <i class="bi bi-capsule"></i> Pharmacy
         </a>
+        <a href="{{ route('admin.pharmacists.index') }}" class="{{ request()->routeIs('admin.pharmacists.*') ? 'active' : '' }}">
+            <i class="bi bi-person-workspace"></i> Pharmacists
+        </a>
         <a href="{{ route('admin.inventory.index') }}" class="{{ request()->routeIs('admin.inventory.*') ? 'active' : '' }}">
             <i class="bi bi-box-seam"></i> Inventory
         </a>

@@ -12,11 +12,11 @@
 <body>
     <div class="d-flex">
         <div class="sidebar d-flex flex-column vh-100 p-3">
-            <a href="{{ route('doctor.profile.index') }}" class="d-block text-center py-3 text-decoration-none">
+            <a href="{{ route('doctor.profile.index') }}" class="d-block text-center text-decoration-none">
                 <img src="{{ $doctor->profile_image ? asset($doctor->profile_image) : asset('images/default-doctor.png') }}" 
                      alt="{{ $doctor->name }}" 
                      class="rounded-circle mb-2" 
-                     style="width: 60px; height: 60px; object-fit: cover;">
+                     style="width: 100px; height: 100px; object-fit: cover;">
                 <h6 class="fw-bold text-primary mb-0">{{ $doctor->name }}</h6>
                 <small class="text-muted">{{ $doctor->specialization }}</small>
             </a>            

@@ -11,6 +11,7 @@ class Inventory extends Model
         'category',
         'quantity',
         'unit',
+        'unit_price', 
         'expiry_date',
         'low_stock_threshold',
     ];

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('category');
             $table->integer('quantity')->default(0);
             $table->string('unit')->default('pcs');
+            $table->decimal('unit_price', 10, 2)->default(0);
             $table->date('expiry_date')->nullable();
             $table->integer('low_stock_threshold')->default(5);
             $table->timestamps();

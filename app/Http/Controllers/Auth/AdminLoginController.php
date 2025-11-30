@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use App\Models\Doctor;
+use App\Models\Pharmacist;
 
 class AdminLoginController extends Controller
 {
@@ -33,6 +35,13 @@ class AdminLoginController extends Controller
             Auth::guard('doctor')->login($doctor);
             return redirect()->route('doctor.dashboard.index');
         }
+
+        $pharmacist = Pharmacist::where('email', $request->email)->first();
+
+        if ($pharmacist && Hash::check($request->password, $pharmacist->password)) {
+            Auth::guard('pharmacist')->login($pharmacist);
+            return redirect()->route('pharmacist.dashboard.index');
+        }        
 
         return back()->withErrors([
             'email' => 'Invalid credentials.'

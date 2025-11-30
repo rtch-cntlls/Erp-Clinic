@@ -31,14 +31,14 @@ class InventoryController extends Controller
             'category' => 'required|string|max:100',
             'quantity' => 'required|integer|min:0',
             'unit' => 'required|string|max:20',
+            'unit_price' => 'required|numeric|min:0',
             'expiry_date' => 'nullable|date',
             'low_stock_threshold' => 'nullable|integer|min:0',
-        ]);
+        ]);        
 
         $this->inventoryService->createItem($request->all());
 
-        return redirect()->route('admin.inventory.index')
-                         ->with('success', 'Inventory item added successfully!');
+        return redirect()->back()->with('success', 'Inventory item added successfully!');
     }
 
     public function update(Request $request, Inventory $inventory)
@@ -48,13 +48,14 @@ class InventoryController extends Controller
             'category' => 'required|string|max:100',
             'quantity' => 'required|integer|min:0',
             'unit' => 'required|string|max:20',
+            'unit_price' => 'required|numeric|min:0',
             'expiry_date' => 'nullable|date',
             'low_stock_threshold' => 'nullable|integer|min:0',
-        ]);
+        ]); 
 
         $this->inventoryService->updateItem($inventory, $request->all());
 
-        return redirect()->route('admin.inventory.index')
+        return redirect()->back()
                          ->with('success', 'Inventory item updated successfully!');
     }
 }

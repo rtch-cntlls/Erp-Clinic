@@ -10,12 +10,18 @@ use App\Http\Controllers\Admin\DoctorController;
 use App\Http\Controllers\Admin\InventoryController;
 use App\Http\Controllers\Admin\PharmacyController;
 use App\Http\Controllers\Admin\BillingController;
+use App\Http\Controllers\Admin\PharmacistController;
 use App\Http\Controllers\Auth\AdminLoginController;
 
 use App\Http\Middleware\DoctorAuth;
 use App\Http\Controllers\Doctor\DoctorDashboardController;
 use App\Http\Controllers\Doctor\DoctorProfileController;
 use App\Http\Controllers\Doctor\DoctorPatientController;
+
+use App\Http\Middleware\PharmacistAuth;
+use App\Http\Controllers\Pharmacist\PharmacistDashboardController;
+use App\Http\Controllers\Pharmacist\PharmacistInventoryController;
+
 
 Route::get('admin/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
 Route::post('admin/login', [AdminLoginController::class, 'login'])->name('admin.login.post');
@@ -68,31 +74,61 @@ Route::middleware([AdminAuth::class])->group(function () {
         Route::post('/{prescription}/dispense', [PharmacyController::class, 'dispense'])->name('dispense');
     });
 
+    Route::prefix('admin/pharmacists')->name('admin.pharmacists.')->group(function () {
+        Route::get('/', [PharmacistController::class, 'index'])->name('index');
+        Route::get('/create', [PharmacistController::class, 'create'])->name('create');
+        Route::post('/', [PharmacistController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [PharmacistController::class, 'edit'])->name('edit');
+        Route::post('/{id}', [PharmacistController::class, 'update'])->name('update');
+    });
+    
     Route::prefix('admin/billing')->name('admin.billing.')->group(function () {
         Route::get('/', [BillingController::class, 'index'])->name('index');
         Route::get('/create', [BillingController::class, 'create'])->name('create');
         Route::post('/store', [BillingController::class, 'store'])->name('store');
         Route::get('/{billing}', [BillingController::class, 'show'])->name('show');
     });
+});
 
-    Route::middleware([DoctorAuth::class])->group(function () {
+Route::middleware([DoctorAuth::class])->group(function () {
 
-        Route::prefix('doctor/dashboard')->name('doctor.dashboard.')->group(function () {
-            Route::get('/dashboard', [DoctorDashboardController::class, 'index'])->name('index');
-        });
+    Route::prefix('doctor/dashboard')->name('doctor.dashboard.')->group(function () {
+        Route::get('/dashboard', [DoctorDashboardController::class, 'index'])->name('index');
+    });
 
-        Route::prefix('doctor/profile')->name('doctor.profile.')->group(function () {
-            Route::get('/', [DoctorProfileController::class, 'index'])->name('index');
-            Route::post('/schedule/store', [DoctorProfileController::class, 'store'])->name('schedule.store');
-        });   
-        
-        Route::prefix('doctor/patients')->name('doctor.patients.')->group(function () {
-            Route::get('/', [DoctorPatientController::class, 'index'])->name('index');
-            Route::get('/{patients}', [DoctorPatientController::class, 'show'])->name('show');
-            Route::post('/{id}/visit/store', [DoctorPatientController::class, 'storeVisit'])->name('visits.store');
-            Route::post('/patients/{id}/prescriptions/store', [DoctorPatientController::class, 'storePrescription'])->name('prescriptions.store');
+    Route::prefix('doctor/profile')->name('doctor.profile.')->group(function () {
+        Route::get('/', [DoctorProfileController::class, 'index'])->name('index');
+        Route::post('/schedule/store', [DoctorProfileController::class, 'store'])->name('schedule.store');
+    });   
+    
+    Route::prefix('doctor/patients')->name('doctor.patients.')->group(function () {
+        Route::get('/', [DoctorPatientController::class, 'index'])->name('index');
+        Route::get('/{patients}', [DoctorPatientController::class, 'show'])->name('show');
+        Route::post('/{id}/visit/store', [DoctorPatientController::class, 'storeVisit'])->name('visits.store');
+        Route::post('/patients/{id}/prescriptions/store', [DoctorPatientController::class, 'storePrescription'])->name('prescriptions.store');
 
-        });
-        
     });
 });
+
+
+Route::middleware([PharmacistAuth::class])->group(function () {
+
+    Route::prefix('pharmacist/dashboard')->name('pharmacist.dashboard.')->group(function () {
+        Route::get('/dashboard', [PharmacistDashboardController::class, 'index'])->name('index');
+    });
+
+    Route::prefix('pharmacist/stock')->name('pharmacist.stock.')->group(function () {
+        Route::get('/', [PharmacistInventoryController::class, 'index'])->name('index');
+    });
+
+    Route::prefix('pharmacist/dispense')->name('pharmacist.dispense.')->group(function () {
+        Route::get('/', [DispenseController::class, 'index'])->name('index');
+    });
+
+    Route::prefix('pharmacist/expiry')->name('pharmacist.expiry.')->group(function () {
+        Route::get('/', [ExpiryController::class, 'index'])->name('index');
+    });
+
+    Route::post('/logout', [PharmacistLoginController::class, 'logout'])->name('logout');
+});
+

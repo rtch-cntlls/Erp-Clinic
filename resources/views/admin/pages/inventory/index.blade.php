@@ -4,9 +4,9 @@
 <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-2">
         <h4 class="fw-bold text-dark"><i class="bi bi-box-seam me-2"></i>Inventory Management</h4>
-        <button class="btn btn-primary d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#addItemModal">
+        {{-- <button class="btn btn-primary d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#addItemModal">
             <i class="bi bi-plus-circle me-1"></i> Add Item
-        </button>
+        </button> --}}
     </div>
     <div class="row g-3 mb-4">
         @foreach($cards as $card)
@@ -29,9 +29,9 @@
                             <th>Category</th>
                             <th>Quantity</th>
                             <th>Unit</th>
+                            <th>Price</th>
                             <th>Expiry Date</th>
                             <th>Status</th>
-                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -41,7 +41,8 @@
                                 <td>{{ $item->category }}</td>
                                 <td>{{ $item->quantity }}</td>
                                 <td>{{ $item->unit }}</td>
-                                <td>{{ $item->expiry_date?->format('d M Y') ?? '-' }}</td>
+                                <td> ₱{{ $item->unit_price }}</td>
+                                <td>{{ $item->expiry_date?->format('M. d, Y') ?? '-' }}</td>
                                 <td>
                                     @if($item->quantity <= $item->low_stock_threshold)
                                         <span class="badge bg-danger">Low Stock</span>
@@ -51,13 +52,12 @@
                                         <span class="badge bg-success">Available</span>
                                     @endif
                                 </td>
-                                <td>
+                                {{-- <td>
                                     <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editItemModal{{ $item->id }}">
                                         <i class="bi bi-pencil"></i>
                                     </button>
-                                </td>
+                                </td> --}}
                             </tr>
-                            @include('admin.pages.inventory.edit')
                         @empty
                         <tr>
                             <td colspan="8" class="text-center text-muted py-4">
@@ -70,6 +70,5 @@
             </div>
         </div>
     </div>
-    @include('admin.pages.inventory.create')
 </div>
 @endsection

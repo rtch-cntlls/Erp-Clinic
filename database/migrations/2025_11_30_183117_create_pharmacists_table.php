@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('dispensings', function (Blueprint $table) {
+        Schema::create('pharmacists', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('prescription_id')->constrained()->onDelete('cascade');
-            $table->foreignId('dispensed_by'); 
-            $table->decimal('total_amount', 12, 2);
-            $table->timestamp('dispense_date');
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('email')->unique();
+            $table->string('phone')->nullable();
+            $table->string('password');
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('dispensings');
+        Schema::dropIfExists('pharmacists');
     }
 };
