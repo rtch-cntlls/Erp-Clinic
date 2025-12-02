@@ -1,26 +1,16 @@
-@extends('layouts.doctor')
+@extends('layouts.receptionist')
 @section('title', 'Patient Details')
 @section('content')
 <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div class="d-flex align-items-center">
-            <a href="{{ route('doctor.patients.index') }}" class="btn btn-outline-secondary btn-sm me-3">
+            <a href="{{ route('receptionist.patients.index') }}" class="btn btn-outline-secondary btn-sm me-3">
                 <i class="bi bi-arrow-left-circle me-1"></i> Back
             </a>
             <h3 class="fw-bold text-dark mb-0">
                 <i class="bi bi-person-lines-fill me-2"></i>Patient Details
             </h3>
         </div>
-        <div>
-            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addVisitModal">
-                <i class="bi bi-plus-circle me-1"></i> Add Visit Log
-            </button>
-            <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#addPrescriptionModal">
-                <i class="bi bi-capsule me-1"></i> Add Prescription
-            </button>
-        </div>
-        @include('doctor.pages.patients.prescription')
-        @include('doctor.pages.patients.create')
     </div>
     <div class="card shadow-sm border-0 mb-4">
         <div class="card-body">
@@ -93,7 +83,7 @@
             </div>
         </div>
     @else
-        <div class=" text-center mt-3">
+        <div class="text-center mt-3">
             <i class="bi bi-info-circle me-1"></i>No visits recorded for this patient.
         </div>
     @endif

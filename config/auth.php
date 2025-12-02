@@ -55,6 +55,11 @@ return [
             'driver' => 'session',
             'provider' => 'pharmacists',
         ],
+
+        'receptionist' => [
+            'driver' => 'session',
+            'provider' => 'receptionists',
+        ],
     ],
 
     /*
@@ -93,6 +98,11 @@ return [
         'pharmacists' => [
             'driver' => 'eloquent',
             'model' => App\Models\Pharmacist::class,
+        ],
+
+        'receptionists' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Receptionist::class,
         ],
     ],
 

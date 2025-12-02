@@ -10,7 +10,8 @@ use App\Http\Controllers\Admin\DoctorController;
 use App\Http\Controllers\Admin\InventoryController;
 use App\Http\Controllers\Admin\PharmacyController;
 use App\Http\Controllers\Admin\BillingController;
-use App\Http\Controllers\Admin\PharmacistController;
+use App\Http\Controllers\Admin\PharmacistController; 
+use App\Http\Controllers\Admin\ReceptionistController; 
 use App\Http\Controllers\Auth\AdminLoginController;
 
 use App\Http\Middleware\DoctorAuth;
@@ -21,6 +22,11 @@ use App\Http\Controllers\Doctor\DoctorPatientController;
 use App\Http\Middleware\PharmacistAuth;
 use App\Http\Controllers\Pharmacist\PharmacistDashboardController;
 use App\Http\Controllers\Pharmacist\PharmacistInventoryController;
+use App\Http\Controllers\Pharmacist\PharmacistDispenseController;
+
+use App\Http\Middleware\ReceptionistAuth;
+use App\Http\Controllers\Receptionist\ReceptionistDashboardController;
+use App\Http\Controllers\Receptionist\ReceptionistPatientController;
 
 
 Route::get('admin/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
@@ -69,9 +75,7 @@ Route::middleware([AdminAuth::class])->group(function () {
 
     Route::prefix('admin/pharmacy')->name('admin.pharmacy.')->group(function() {
         Route::get('/', [PharmacyController::class, 'index'])->name('index');
-        Route::get('/pending', [PharmacyController::class, 'pending'])->name('pending');
         Route::get('/{prescription}', [PharmacyController::class, 'show'])->name('show');
-        Route::post('/{prescription}/dispense', [PharmacyController::class, 'dispense'])->name('dispense');
     });
 
     Route::prefix('admin/pharmacists')->name('admin.pharmacists.')->group(function () {
@@ -82,6 +86,12 @@ Route::middleware([AdminAuth::class])->group(function () {
         Route::post('/{id}', [PharmacistController::class, 'update'])->name('update');
     });
     
+    Route::prefix('admin/receptionists')->name('admin.receptionists.')->group(function () {
+        Route::get('/', [ReceptionistController::class, 'index'])->name('index');
+        Route::post('/store', [ReceptionistController::class, 'store'])->name('store');
+        Route::put('/{receptionist}', [ReceptionistController::class, 'update'])->name('update');
+    });    
+
     Route::prefix('admin/billing')->name('admin.billing.')->group(function () {
         Route::get('/', [BillingController::class, 'index'])->name('index');
         Route::get('/create', [BillingController::class, 'create'])->name('create');
@@ -122,13 +132,24 @@ Route::middleware([PharmacistAuth::class])->group(function () {
     });
 
     Route::prefix('pharmacist/dispense')->name('pharmacist.dispense.')->group(function () {
-        Route::get('/', [DispenseController::class, 'index'])->name('index');
-    });
-
-    Route::prefix('pharmacist/expiry')->name('pharmacist.expiry.')->group(function () {
-        Route::get('/', [ExpiryController::class, 'index'])->name('index');
+        Route::get('/', [PharmacistDispenseController::class, 'index'])->name('index');
+        Route::post('/{prescription}/dispense', [PharmacistDispenseController::class, 'dispense'])->name('dispense');
     });
 
     Route::post('/logout', [PharmacistLoginController::class, 'logout'])->name('logout');
 });
 
+Route::middleware([ReceptionistAuth::class])->group(function () {
+
+    Route::prefix('receptionist/dashboard')->name('receptionist.dashboard.')->group(function () {
+        Route::get('/', [ReceptionistDashboardController::class, 'index'])->name('index');
+    });
+
+    Route::prefix('receptionist/patients')->name('receptionist.patients.')->group(function () {
+        Route::get('/', [ReceptionistPatientController::class, 'index'])->name('index');
+        Route::get('/create', [ReceptionistPatientController::class, 'create'])->name('create');
+        Route::get('/{patient}', [ReceptionistPatientController::class, 'show'])->name('show');
+    });    
+
+    Route::post('/logout', [ReceptionistLoginController::class, 'logout'])->name('logout');
+});

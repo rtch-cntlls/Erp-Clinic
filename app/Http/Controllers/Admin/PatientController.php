@@ -30,7 +30,7 @@ class PatientController extends Controller
     public function store(Request $request)
     {
         $this->service->createPatient($request->all());
-        return redirect()->route('admin.patients.index')
+        return redirect()->back()
                          ->with('success', 'Patient created successfully.');
     }
 

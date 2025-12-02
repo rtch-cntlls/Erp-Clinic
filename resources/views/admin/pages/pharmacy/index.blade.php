@@ -4,10 +4,10 @@
 <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h3 class="fw-bold"><i class="bi bi-capsule me-2"></i> Pharmacy Management</h3>
-        <button type="button" class="btn btn-primary d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#pendingPrescriptionsModal">
+        {{-- <button type="button" class="btn btn-primary d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#pendingPrescriptionsModal">
             <i class="bi bi-clock-history me-1"></i> Pending Prescriptions
         </button>
-        @include('admin.pages.pharmacy.prescriptions')
+        @include('admin.pages.pharmacy.prescriptions') --}}
     </div>
     <div class="row g-3 mb-4">
         <div class="col-md-3">
@@ -48,7 +48,6 @@
                 <table class="table table-hover align-middle mb-0">
                     <thead class="table-light">
                         <tr>
-                            <th></th>
                             <th>Patient</th>
                             <th>Doctor</th>
                             <th>Status</th>
@@ -59,8 +58,7 @@
                     <tbody>
                         @forelse($prescriptions as $prescription)
                         <tr>
-                            <td>{{ $prescription->id }}</td>
-                            <td>{{ $prescription->patient->name }}</td>
+                            <td>{{ $prescription->patient->first_name }} {{ $prescription->patient->last_name }}</td>
                             <td>{{ $prescription->doctor->name }}</td>
                             <td>
                                 <span class="badge 
@@ -69,19 +67,12 @@
                                     {{ ucfirst($prescription->status) }}
                                 </span>
                             </td>
-                            <td>{{ $prescription->created_at->format('d M Y') }}</td>
+                            <td>{{ $prescription->created_at->format('M. d, Y') }}</td>
                             <td>
-                                <a href="{{ route('admin.pharmacy.show', $prescription->id) }}" class="btn btn-sm btn-info d-flex align-items-center">
+                                <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#viewPrescriptionModal{{ $prescription->id }}">
                                     <i class="bi bi-eye me-1"></i> View
-                                </a>
-                                @if($prescription->status == 'pending')
-                                <form action="{{ route('admin.pharmacy.dispense', $prescription->id) }}" method="POST" class="d-inline">
-                                    @csrf
-                                    <button type="submit" class="btn btn-sm btn-success d-flex align-items-center">
-                                        <i class="bi bi-check-circle me-1"></i> Dispense
-                                    </button>
-                                </form>
-                                @endif
+                                </button>
+                                @include('admin.pages.pharmacy.show')
                             </td>
                         </tr>
                         @empty

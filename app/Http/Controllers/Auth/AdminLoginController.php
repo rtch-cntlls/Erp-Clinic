@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Doctor;
 use App\Models\Pharmacist;
+use App\Models\Receptionist;
 
 class AdminLoginController extends Controller
 {
@@ -43,6 +44,13 @@ class AdminLoginController extends Controller
             return redirect()->route('pharmacist.dashboard.index');
         }        
 
+        $receptionist = Receptionist::where('email', $request->email)->first();
+
+        if ($receptionist && Hash::check($request->password, $receptionist->password)) {
+            Auth::guard('receptionist')->login($receptionist);
+            return redirect()->route('receptionist.dashboard.index');
+        }
+        
         return back()->withErrors([
             'email' => 'Invalid credentials.'
         ]);

@@ -12,7 +12,7 @@ class PrescriptionItem extends Model
         return $this->belongsTo(Prescription::class);
     }
 
-    public function medicine() {
-        return $this->belongsTo(Medicine::class);
+    public function inventory() {
+        return $this->belongsTo(Inventory::class, 'medicine_id');
     }
 }

@@ -52,26 +52,29 @@ class DoctorPatientController extends Controller
         $request->validate([
             'medicine_id.*' => 'required|exists:inventories,id',
             'quantity.*'    => 'required|integer|min:1',
-            'unit_price.*'  => 'nullable|numeric|min:0',
         ]);
-
+    
         $doctor = auth()->guard('doctor')->user();
-
+    
         $prescription = Prescription::create([
             'patient_id' => $patientId,
             'doctor_id'  => $doctor->id,
             'status'     => 'pending',
         ]);
-
+    
         foreach ($request->medicine_id as $i => $medicineId) {
+            $inventory = Inventory::find($medicineId);
+    
+            if (!$inventory) continue;
+    
             PrescriptionItem::create([
                 'prescription_id' => $prescription->id,
-                'medicine_id'     => $medicineId,
+                'medicine_id'     => $inventory->id,
                 'quantity'        => $request->quantity[$i],
-                'unit_price'      => $request->unit_price[$i] ?? null,
+                'unit_price'      => $inventory->unit_price, 
             ]);
         }
-
+    
         return back()->with('success', 'Prescription created successfully.');
-    }
+    }    
 }

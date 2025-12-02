@@ -39,6 +39,9 @@
         <a href="{{ route('admin.doctors.index') }}" class="{{ request()->routeIs('admin.doctors.*') ? 'active' : '' }}">
             <i class="bi bi-person-badge"></i> Doctors
         </a>
+        <a href="{{ route('admin.receptionists.index') }}" class="{{ request()->routeIs('admin.receptionists.*') ? 'active' : '' }}">
+            <i class="bi bi-person-lines-fill"></i> Receptionists
+        </a>
         <a href="#"><i class="bi bi-people"></i> HR</a>
         <a href="#"><i class="bi bi-graph-up"></i> Reports</a>
         <form action="" method="POST" class="mt-auto text-center">

@@ -1,18 +1,29 @@
-@extends('layouts.doctor')
+@extends('layouts.receptionist')
 @section('title', 'Patients')
 @section('content')
 <div class="container">
-    <h4 class="fw-bold text-dark mb-5">
-        <i class="bi bi-people-fill me-2"></i>Patients Management
-    </h4>
+    <div class="d-flex justify-content-between align-items-center  mb-4">
+        <h4 class="fw-bold text-dark">
+            <i class="bi bi-people-fill"></i> Patients Management
+        </h4>
+        <a href="{{ route('receptionist.patients.create') }}" class="btn btn-primary d-flex align-items-center">
+            <i class="bi bi-plus-circle me-2"></i> Add Patient
+        </a>
+    </div>    
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <form method="GET" action="{{ route('doctor.patients.index') }}">
+        <form method="GET" action="{{ route('receptionist.patients.index') }}">
             <div class="input-group rounded-3 shadow-sm border" style="overflow: hidden; width: 500px;">
                 <button type="submit" class="btn btn-outline-secondary border-0"><i class="bi bi-search me-1"></i> Search</button>
                 <input type="text" name="search" value="{{ request('search') }}" class="form-control border-0" placeholder="Search by name, email, or phone">
             </div>
         </form>
     </div>
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show shadow-sm rounded-3" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    @endif
     <div class="card shadow-sm">
         <div class="card-header">
             <h6 class="mb-0"><i class="bi bi-people-fill me-2"></i>Patients List</h6>
@@ -45,20 +56,24 @@
                                 </td>
                                 <td>{{ $patient->dob ? $patient->dob->format('M. d, Y') : '-' }}</td>
                                 <td class="text-center">
-                                    <a href="{{ route('doctor.patients.show', $patient->id) }}" class="btn btn-sm btn-primary" title="View">
+                                    <a href="{{ route('receptionist.patients.show', $patient->id) }}" class="btn btn-sm btn-primary" title="View">
                                         <i class="bi bi-eye"></i>
                                     </a>
                                 </td>
                             </tr>
                         @empty
                             <td colspan="7" class="text-center py-4 text-muted">
-                                <i class="bi bi-exclamation-circle me-2"></i>No patients records found.
+                                <i class="bi bi-exclamation-circle me-2"></i>No billing records found.
                             </td>
                         @endforelse
                     </tbody>
                 </table>
             </div>
         </div>
+    </div>
+    <div class="mt-4 d-flex justify-content-end">
+        {{ $patients->withQueryString()->links('pagination::bootstrap-5') }}
+    </div>
     </div>
 </div>
 @endsection

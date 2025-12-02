@@ -16,7 +16,6 @@
                                 <tr>
                                     <th class="py-3">Medicine</th>
                                     <th width="100" class="py-3 text-center">Qty</th>
-                                    <th width="150" class="py-3 text-center">Unit Price</th>
                                     <th width="60"></th>
                                 </tr>
                             </thead>
@@ -38,13 +37,6 @@
                                             class="form-control text-center" 
                                             min="1" 
                                             required>
-                                    </td>
-                                    <td>
-                                        <input type="number" 
-                                            step="0.01" 
-                                            name="unit_price[]" 
-                                            class="form-control text-center" 
-                                            placeholder="0.00">
                                     </td>
                                     <td class="text-center">
                                         <button type="button" class="btn btn-outline-danger btn-sm remove-row">
