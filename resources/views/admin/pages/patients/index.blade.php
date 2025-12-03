@@ -6,9 +6,6 @@
         <h4 class="fw-bold text-dark">
             <i class="bi bi-people-fill me-2"></i>Patients Management
         </h4>
-        {{-- <a href="{{ route('admin.patients.create') }}" class="btn btn-primary d-flex align-items-center">
-            <i class="bi bi-plus-circle me-2"></i> Add Patient
-        </a> --}}
     </div>
     <div class="row g-3 mb-3">
         @foreach ($cards as $card)

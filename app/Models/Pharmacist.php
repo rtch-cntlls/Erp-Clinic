@@ -15,9 +15,18 @@ class Pharmacist extends Authenticatable
         'email',
         'phone',
         'password',
-        'status'
+        'status',
+        'profile_photo',
+        'gender',
+        'date_of_birth',
+        'address',
+        'license_number',
     ];
 
+    protected $casts = [
+        'date_of_birth' => 'date',
+    ];
+    
     protected $hidden = [
         'password'
     ];

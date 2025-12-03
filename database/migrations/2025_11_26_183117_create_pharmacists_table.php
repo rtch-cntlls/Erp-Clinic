@@ -19,6 +19,13 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->string('password');
             $table->boolean('status')->default(true);
+
+            $table->string('profile_photo')->nullable();
+            $table->string('gender')->nullable();
+            $table->date('date_of_birth')->nullable();
+            $table->string('address')->nullable();
+            $table->string('license_number')->nullable();
+
             $table->timestamps();
         });
     }

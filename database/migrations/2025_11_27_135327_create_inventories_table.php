@@ -20,6 +20,13 @@ return new class extends Migration
             $table->decimal('unit_price', 10, 2)->default(0);
             $table->date('expiry_date')->nullable();
             $table->integer('low_stock_threshold')->default(5);
+
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
+
+            $table->foreign('created_by')->references('id')->on('pharmacists')->nullOnDelete();
+            $table->foreign('updated_by')->references('id')->on('pharmacists')->nullOnDelete();
+            
             $table->timestamps();
         });
     }

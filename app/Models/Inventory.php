@@ -15,6 +15,8 @@ class Inventory extends Model
         'unit_price', 
         'expiry_date',
         'low_stock_threshold',
+        'created_by',
+        'updated_by',
     ];
 
     protected $casts = [

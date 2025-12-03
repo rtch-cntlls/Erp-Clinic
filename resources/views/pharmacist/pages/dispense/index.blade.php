@@ -10,10 +10,10 @@
     @endif
     <div class="row mb-3 g-2">
         <div class="col-md-4">
-            <input type="text" class="form-control rounded-pill" id="searchPrescription" placeholder="Search by patient or doctor...">
+            <input type="text" class="form-control" id="searchPrescription" placeholder="Search by patient or doctor...">
         </div>
         <div class="col-md-3">
-            <select class="form-select rounded-pill" id="filterStatus">
+            <select class="form-select" id="filterStatus">
                 <option value="">All Status</option>
                 <option value="pending">Pending</option>
                 <option value="dispensed">Dispensed</option>
@@ -50,7 +50,7 @@
                                         <span class="badge bg-danger">Cancelled</span>
                                     @endif
                                 </td>
-                                <td>{{ $prescription->created_at->format('d M Y') }}</td>
+                                <td>{{ $prescription->created_at->format('M. d, Y') }}</td>
                                 <td>
                                     <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#viewPrescriptionModal{{ $prescription->id }}">
                                         <i class="bi bi-eye"></i>

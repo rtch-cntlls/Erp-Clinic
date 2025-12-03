@@ -27,6 +27,10 @@
            class="{{ request()->routeIs('pharmacist.dispense.*') ? 'active' : '' }}">
             <i class="bi bi-arrow-right-circle"></i> Dispense
         </a>
+        <a href="{{ route('pharmacist.profile.index') }}" 
+            class="{{ request()->routeIs('pharmacist.profile.*') ? 'active' : '' }}">
+            <i class="bi bi-person-circle"></i> Profile
+        </a>
         <form action="" method="POST" class="mt-auto text-center">
             @csrf
             <button type="submit" class="btn btn-danger btn-sm mt-3">

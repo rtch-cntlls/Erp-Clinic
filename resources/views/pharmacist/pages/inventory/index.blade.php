@@ -13,10 +13,10 @@
     </div>
     <div class="row mb-3 g-2">
         <div class="col-md-4">
-            <input type="text" class="form-control rounded-pill" id="searchInventory" placeholder="Search by name or category...">
+            <input type="text" class="form-control" id="searchInventory" placeholder="Search by name or category...">
         </div>
         <div class="col-md-3">
-            <select class="form-select rounded-pill" id="filterCategory">
+            <select class="form-select" id="filterCategory">
                 <option value="">All Categories</option>
                 @foreach($categories as $category)
                     <option value="{{ $category }}">{{ $category }}</option>

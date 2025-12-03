@@ -23,6 +23,7 @@ use App\Http\Middleware\PharmacistAuth;
 use App\Http\Controllers\Pharmacist\PharmacistDashboardController;
 use App\Http\Controllers\Pharmacist\PharmacistInventoryController;
 use App\Http\Controllers\Pharmacist\PharmacistDispenseController;
+use App\Http\Controllers\Pharmacist\PharmacistProfileController;
 
 use App\Http\Middleware\ReceptionistAuth;
 use App\Http\Controllers\Receptionist\ReceptionistDashboardController;
@@ -84,6 +85,7 @@ Route::middleware([AdminAuth::class])->group(function () {
         Route::post('/', [PharmacistController::class, 'store'])->name('store');
         Route::get('/{id}/edit', [PharmacistController::class, 'edit'])->name('edit');
         Route::post('/{id}', [PharmacistController::class, 'update'])->name('update');
+        Route::post('/{id}/toggle-status', [PharmacistController::class, 'toggleStatus'])->name('toggleStatus');
     });
     
     Route::prefix('admin/receptionists')->name('admin.receptionists.')->group(function () {
@@ -134,6 +136,10 @@ Route::middleware([PharmacistAuth::class])->group(function () {
     Route::prefix('pharmacist/dispense')->name('pharmacist.dispense.')->group(function () {
         Route::get('/', [PharmacistDispenseController::class, 'index'])->name('index');
         Route::post('/{prescription}/dispense', [PharmacistDispenseController::class, 'dispense'])->name('dispense');
+    });
+
+    Route::prefix('pharmacist/profile')->name('pharmacist.profile.')->group(function () {
+        Route::get('profile', [PharmacistProfileController::class, 'index'])->name('index');
     });
 
     Route::post('/logout', [PharmacistLoginController::class, 'logout'])->name('logout');

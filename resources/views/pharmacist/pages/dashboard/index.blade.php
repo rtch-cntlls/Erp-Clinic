@@ -7,7 +7,7 @@
     </h4>
     <div class="row g-3 mb-4">
         @foreach($cards as $card)
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="card shadow-sm p-3 text-center">
                     <i class="bi {{ $card['icon'] }} fs-2 {{ $card['color'] }} mb-2"></i>
                     <h6 class="text-muted mb-1">{{ $card['title'] }}</h6>
