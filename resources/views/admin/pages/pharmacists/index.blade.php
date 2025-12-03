@@ -21,28 +21,45 @@
             </div>
         @endforeach
     </div> 
-    <form method="GET" class="row g-2 mb-4 align-items-center">
-        <div class="col-md-4 position-relative">
-            <i class="bi bi-search position-absolute" 
-               style="top: 50%; left: 12px; transform: translateY(-50%); color:#6c757d;"></i>
-            <input type="text" name="search" value="{{ request('search') }}" 
-                   class="form-control ps-5" placeholder="Search by name or email">
-        </div>
-        <div class="col-md-3 position-relative">
-            <i class="bi bi-filter position-absolute" 
-               style="top: 50%; left: 12px; transform: translateY(-50%); color:#6c757d;"></i>
-            <select name="status" class="form-select ps-5">
-                <option value="">All Statuses</option>
-                <option value="1" {{ request('status')==='1' ? 'selected' : '' }}>Active</option>
-                <option value="0" {{ request('status')==='0' ? 'selected' : '' }}>Inactive</option>
-            </select>
-        </div>
-        <div class="col-md-2 d-grid">
-            <button type="submit" class="btn btn-dark">
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
+        <form method="GET" class="d-flex flex-wrap gap-2 align-items-center flex-grow-1">
+            <div class="position-relative flex-grow-1" style="min-width: 200px;">
+                <i class="bi bi-search position-absolute" 
+                   style="top: 50%; left: 12px; transform: translateY(-50%); color:#6c757d;"></i>
+                <input type="text" name="search" value="{{ request('search') }}" 
+                       class="form-control ps-5 form-control-sm" placeholder="Search by name or email">
+            </div>
+            <div class="position-relative" style="min-width: 150px;">
+                <i class="bi bi-filter position-absolute" 
+                   style="top: 50%; left: 12px; transform: translateY(-50%); color:#6c757d;"></i>
+                <select name="status" class="form-select ps-5  form-select-sm">
+                    <option value="">All Statuses</option>
+                    <option value="1" {{ request('status')==='1' ? 'selected' : '' }}>Active</option>
+                    <option value="0" {{ request('status')==='0' ? 'selected' : '' }}>Inactive</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-sm btn-dark d-flex align-items-center">
                 <i class="bi bi-funnel-fill me-1"></i> Filter
             </button>
+        </form>
+        <div class="dropdown">
+            <button class="btn btn-outline-danger btn-sm dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown">
+                <i class="bi bi-download me-1"></i> Export
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li>
+                    <a class="dropdown-item d-flex align-items-center" href="{{ route('admin.pharmacists.exportCsv') }}">
+                        <i class="bi bi-filetype-csv me-2 text-success"></i> Export as CSV
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item d-flex align-items-center" href="{{ route('admin.pharmacists.exportPdf') }}">
+                        <i class="bi bi-file-earmark-pdf me-2 text-danger"></i> Export as PDF
+                    </a>
+                </li>
+            </ul>
         </div>
-    </form>     
+    </div>    
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Pharmacist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Response;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PharmacistController extends Controller
 {
@@ -139,5 +141,60 @@ class PharmacistController extends Controller
 
         return redirect()->route('admin.pharmacists.index')
             ->with('success', 'Pharmacist updated successfully.');
+    }
+
+    public function exportCsv(Request $request)
+    {
+        $pharmacists = Pharmacist::orderBy('first_name')->get();
+
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="pharmacists.csv"',
+        ];
+
+        $columns = [
+            'First Name',
+            'Last Name',
+            'Email',
+            'Phone',
+            'Gender',
+            'Date of Birth',
+            'Address',
+            'License Number',
+            'Status',
+            'Profile Photo'
+        ];
+
+        $callback = function() use ($pharmacists, $columns) {
+            $file = fopen('php://output', 'w');
+
+            fputcsv($file, $columns);
+
+            foreach ($pharmacists as $ph) {
+                fputcsv($file, [
+                    $ph->first_name,
+                    $ph->last_name,
+                    $ph->email,
+                    $ph->phone ?? '',
+                    ucfirst($ph->gender ?? ''),
+                    $ph->date_of_birth?->format('Y-m-d') ?? '',
+                    $ph->address ?? '',
+                    $ph->license_number ?? '',
+                    $ph->status ? 'Active' : 'Inactive',
+                    $ph->profile_photo ?? '',
+                ]);
+            }
+
+            fclose($file);
+        };
+
+        return Response::stream($callback, 200, $headers);
+    }
+
+    public function exportPdf()
+    {
+        $pharmacists = Pharmacist::orderBy('first_name')->get();
+        $pdf = Pdf::loadView('admin.pages.pharmacists.pdf', compact('pharmacists'));
+        return $pdf->download('pharmacists.pdf');
     }
 }

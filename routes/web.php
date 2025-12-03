@@ -29,6 +29,19 @@ use App\Http\Middleware\ReceptionistAuth;
 use App\Http\Controllers\Receptionist\ReceptionistDashboardController;
 use App\Http\Controllers\Receptionist\ReceptionistPatientController;
 
+use App\Http\Controllers\Auth\PatientLoginController;
+use App\Http\Controllers\Patient\LandingController;
+
+Route::get('patient/login', [PatientLoginController::class, 'showLoginForm'])->name('patient.login.form');
+Route::post('patient/login', [PatientLoginController::class, 'login'])->name('patient.login');
+Route::post('patient/register', [PatientLoginController::class, 'register'])->name('patient.register');
+Route::post('patient/logout', [PatientLoginController::class, 'logout'])->name('patient.logout');
+
+Route::get('auth/google/redirect', [PatientLoginController::class, 'redirectToGoogle'])->name('google.redirect');
+Route::get('auth/google/callback', [PatientLoginController::class, 'handleGoogleCallback'])->name('google.callback');
+
+Route::get('/', [LandingController::class, 'index'])->name('patient.landing');
+
 
 Route::get('admin/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
 Route::post('admin/login', [AdminLoginController::class, 'login'])->name('admin.login.post');
@@ -86,6 +99,9 @@ Route::middleware([AdminAuth::class])->group(function () {
         Route::get('/{id}/edit', [PharmacistController::class, 'edit'])->name('edit');
         Route::post('/{id}', [PharmacistController::class, 'update'])->name('update');
         Route::post('/{id}/toggle-status', [PharmacistController::class, 'toggleStatus'])->name('toggleStatus');
+
+        Route::get('/export/csv', [PharmacistController::class, 'exportCsv'])->name('exportCsv');
+        Route::get('/export/pdf', [PharmacistController::class, 'exportPdf'])->name('exportPdf');
     });
     
     Route::prefix('admin/receptionists')->name('admin.receptionists.')->group(function () {
