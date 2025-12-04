@@ -23,14 +23,10 @@
             class="{{ request()->routeIs('receptionist.patients.*') ? 'active' : '' }}">
             <i class="bi bi-people"></i> Patients
         </a>
-        {{-- <a href="{{ route('receptionist.appointments.index') }}"
+        <a href="{{ route('receptionist.appointments.index') }}"
            class="{{ request()->routeIs('receptionist.appointments.*') ? 'active' : '' }}">
             <i class="bi bi-calendar-check"></i> Appointments
         </a>
-        <a href="{{ route('receptionist.queue.index') }}"
-           class="{{ request()->routeIs('receptionist.queue.*') ? 'active' : '' }}">
-            <i class="bi bi-list-ol"></i> Queue
-        </a> --}}
         <form action="" method="POST" class="mt-auto text-center">
             @csrf
             <button type="submit" class="btn btn-danger btn-sm mt-3">

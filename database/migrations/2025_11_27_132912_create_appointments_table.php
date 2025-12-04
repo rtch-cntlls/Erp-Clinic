@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('patient_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('patient_id')->nullable()->constrained()->onDelete('cascade');
             $table->foreignId('doctor_id')->nullable()->constrained('doctors')->nullOnDelete();
             $table->dateTime('appointment_date');
             $table->enum('type', ['online', 'walk-in'])->default('online');
@@ -29,7 +30,7 @@ return new class extends Migration
             $table->string('reason')->nullable();
             $table->text('notes')->nullable();
 
-            $table->dateTime('check_in_time')->nullable();
+            $table->time('check_in_time')->nullable();
             $table->dateTime('completed_at')->nullable();
             $table->dateTime('cancelled_at')->nullable();
 

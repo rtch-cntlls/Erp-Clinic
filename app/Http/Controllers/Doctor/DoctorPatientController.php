@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Patient;
 use App\Models\PatientVisit;
+use App\Models\Appointment;
 use App\Models\Inventory;
 use App\Models\Prescription;
 use App\Models\PrescriptionItem;
@@ -15,7 +16,7 @@ class DoctorPatientController extends Controller
     public function index()
     {
         $doctor = auth()->guard('doctor')->user();
-        $patients = Patient::orderBy('first_name')->get();
+        $patients = Patient::orderBy('name')->get();
 
         return view('doctor.pages.patients.index', compact('patients', 'doctor'));
     }
@@ -33,16 +34,29 @@ class DoctorPatientController extends Controller
     {
         $request->validate([
             'visit_date' => 'required|date',
-            'action' => 'required|string|max:255',
-            'findings' => 'nullable|string',
+            'action'     => 'required|string|max:255',
+            'findings'   => 'nullable|string',
+            'appointment_id' => 'nullable|exists:appointments,id',
         ]);
 
-        PatientVisit::create([
+        $doctorId = auth()->guard('doctor')->id();
+
+        $visit = PatientVisit::create([
             'patient_id' => $patientId,
             'visit_date' => $request->visit_date,
-            'action' => $request->action,
-            'findings' => $request->findings,
+            'action'     => $request->action,
+            'findings'   => $request->findings,
+            'doctor_id'  => $doctorId,
         ]);
+
+        if ($request->appointment_id) {
+            $appointment = Appointment::find($request->appointment_id);
+            if ($appointment) {
+                $appointment->status = 'Completed';
+                $appointment->completed_at = now();
+                $appointment->save();
+            }
+        }
 
         return redirect()->back()->with('success', 'Patient visit added successfully.');
     }

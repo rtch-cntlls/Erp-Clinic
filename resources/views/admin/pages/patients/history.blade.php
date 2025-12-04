@@ -7,7 +7,6 @@
                     <th>Action / Checkup</th>
                     <th>Findings</th>
                     <th>Doctor</th>
-                    <th>Status</th>
                 </tr>
             </thead>
             <tbody>
@@ -20,12 +19,7 @@
                                 <span class="text-truncate d-block" style="max-width: 250px;" title="{{ $visit->findings }}">{{ $visit->findings }}</span>
                             @else <span class="text-muted">-</span> @endif
                         </td>
-                        <td>{{ $visit->doctor->full_name ?? '-' }}</td>
-                        <td>
-                            <span class="badge {{ $visit->status == 'completed' ? 'bg-success' : ($visit->status == 'pending' ? 'bg-warning text-dark' : 'bg-info') }}">
-                                {{ ucfirst($visit->status ?? 'N/A') }}
-                            </span>
-                        </td>
+                        <td>{{ $visit->doctor->name ?? '-' }}</td>
                     </tr>
                 @empty
                     <tr>

@@ -52,8 +52,6 @@ class PatientService
         return [
             ['title' => 'Total Visits', 'value' => $totalVisits],
             ['title' => 'Last Visit', 'value' => $lastVisit?->visit_date?->format('M d, Y') ?? '-'],
-            ['title' => 'Upcoming Appointment', 'value' => $upcomingAppointment?->appointment_date?->format('M d, Y') ?? '-', 'color' => 'text-success fw-bold'],
-            ['title' => 'Critical Notes', 'value' => '0', 'color' => 'text-danger fw-bold'],
         ];
     }
 

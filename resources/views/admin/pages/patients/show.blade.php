@@ -5,7 +5,7 @@
     <div class="d-flex justify-content-between align-items-center mb-2">
         <h4 class="fw-bold">Patient Details</h4>
         <div>
-            <a href="{{ route('admin.patients.index') }}" class="btn btn-outline-secondary btn-sm me-2">
+            <a href="{{ route('admin.patients.index') }}" class="btn btn-secondary btn-sm me-2">
                 <i class="bi bi-arrow-left-circle me-1"></i> Back
             </a>
         </div>
@@ -58,9 +58,6 @@
     </div>
     <div class="d-flex justify-content-between align-items-center mb-2">
         <h5 class="text-primary fw-semibold"><i class="bi bi-clock-history me-2"></i> Visit / Checkup History</h5>
-        {{-- <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#logVisitModal">
-            <i class="bi bi-plus-circle me-1"></i> Log New Visit
-        </button> --}}
         @include('admin.pages.patients.new-log')
     </div>
     @include('admin.pages.patients.history')

@@ -28,9 +28,13 @@ use App\Http\Controllers\Pharmacist\PharmacistProfileController;
 use App\Http\Middleware\ReceptionistAuth;
 use App\Http\Controllers\Receptionist\ReceptionistDashboardController;
 use App\Http\Controllers\Receptionist\ReceptionistPatientController;
+use App\Http\Controllers\Receptionist\ReceptionistAppointmentController;
 
+use App\Http\Middleware\PatientAuth;
 use App\Http\Controllers\Auth\PatientLoginController;
 use App\Http\Controllers\Patient\LandingController;
+use App\Http\Controllers\Patient\PatientAppointmentController;
+use App\Http\Controllers\Patient\PatientPrescriptionsController;
 
 Route::get('patient/login', [PatientLoginController::class, 'showLoginForm'])->name('patient.login.form');
 Route::post('patient/login', [PatientLoginController::class, 'login'])->name('patient.login');
@@ -41,9 +45,19 @@ Route::get('auth/google/redirect', [PatientLoginController::class, 'redirectToGo
 Route::get('auth/google/callback', [PatientLoginController::class, 'handleGoogleCallback'])->name('google.callback');
 
 Route::get('/', [LandingController::class, 'index'])->name('patient.landing');
-Route::post('/appointment/store', [LandingController::class, 'store'])->name('patient.appointment.store');
+Route::middleware([PatientAuth::class])->group(function () {
 
+    Route::post('/appointment/store', [LandingController::class, 'store'])
+        ->name('patient.appointment.store');
 
+    Route::get('/patient/appointments', [PatientAppointmentController::class, 'index'])->name('patient.appointments.index');
+
+    Route::post('/patient/appointments/{appointment}/cancel', [PatientAppointmentController::class, 'cancel'])
+        ->name('patient.appointments.cancel');
+
+    Route::get('/patient/prescriptions', [PatientPrescriptionsController::class, 'index'])
+        ->name('patient.prescriptions.index');
+});
 
 
 
@@ -175,7 +189,13 @@ Route::middleware([ReceptionistAuth::class])->group(function () {
         Route::get('/', [ReceptionistPatientController::class, 'index'])->name('index');
         Route::get('/create', [ReceptionistPatientController::class, 'create'])->name('create');
         Route::get('/{patient}', [ReceptionistPatientController::class, 'show'])->name('show');
+        Route::post('/patients/{patient}', [ReceptionistPatientController::class, 'update'])->name('update');
     });    
+
+    Route::prefix('receptionist/appointments')->name('receptionist.appointments.')->group(function () {
+        Route::get('/', [ReceptionistAppointmentController::class, 'index'])->name('index');
+        Route::post('/approve/{appointment}', [ReceptionistAppointmentController::class, 'approve'])->name('approve');
+    });
 
     Route::post('/logout', [ReceptionistLoginController::class, 'logout'])->name('logout');
 });

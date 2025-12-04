@@ -38,4 +38,17 @@ class ReceptionistPatientController extends Controller
     
         return view('receptionist.pages.patients.show', compact('patient'));
     }   
+
+    public function update(Request $request, $id)
+    {
+        $patient = Patient::findOrFail($id);
+
+        $patient->update($request->only([
+            'name', 'email', 'phone', 'gender', 'dob', 
+            'blood_group', 'emergency_contact', 'address', 'insurance', 
+            'allergies', 'medications', 'medical_history'
+        ]));
+
+        return back()->with('success', 'Patient details updated successfully.');
+    }
 }

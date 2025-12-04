@@ -55,8 +55,8 @@
                 <ul class="list-group list-group-flush">
                     @forelse($upcomingAppointments as $appt)
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        {{ $appt->patient->name }}
-                        <span class="badge bg-info text-dark">{{ $appt->appointment_date->format('M d, Y H:i') }}</span>
+                        {{ $appt->patient?->name ?? $appt->user->name ?? 'Unknown' }}
+                        <span class="badge bg-info text-dark">{{ $appt->appointment_date->format('M d, Y') }}</span>
                     </li>
                     @empty
                     <li class="list-group-item text-center text-muted">No upcoming appointments</li>

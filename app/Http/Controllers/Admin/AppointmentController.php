@@ -12,7 +12,7 @@ class AppointmentController extends Controller
 {
     public function index()
     {
-        $appointments = Appointment::with('patient', 'doctor')->latest()->paginate(10);
+        $appointments = Appointment::with('patient', 'doctor', 'user')->latest()->paginate(10);
         return view('admin.pages.appointments.index', compact('appointments'));
     }
 

@@ -23,13 +23,13 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link text-dark fw-medium" href="#services">Services</a>
+                        <a class="nav-link text-dark" href="#services">Services</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark fw-medium" href="#about">About</a>
+                        <a class="nav-link text-dark" href="#about">About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark fw-medium" href="#contact">Contact</a>
+                        <a class="nav-link text-dark" href="#contact">Contact</a>
                     </li>
                     @if(Auth::check())
                         <li class="nav-item dropdown ms-3">
@@ -52,12 +52,12 @@
                                 </li>
                                 <hr class="dropdown-divider">
                                 <li>
-                                    <a class="dropdown-item d-flex align-items-center fs-6 py-2" href="">
+                                    <a class="dropdown-item d-flex align-items-center fs-6 py-2" href="{{ route('patient.appointments.index') }}">
                                         <i class="bi bi-calendar-check me-2"></i> My Appointments
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item d-flex align-items-center fs-6 py-2" href="">
+                                    <a class="dropdown-item d-flex align-items-center fs-6 py-2" href="{{ route('patient.prescriptions.index') }}">
                                         <i class="bi bi-capsule me-2"></i> My Prescriptions
                                     </a>
                                 </li>

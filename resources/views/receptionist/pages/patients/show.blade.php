@@ -11,11 +11,17 @@
                 <i class="bi bi-person-lines-fill me-2"></i>Patient Details
             </h3>
         </div>
+        <div class="">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editPatientModal">
+                <i class="bi bi-pencil-square me-1"></i> Edit Patient
+            </button>
+            @include('receptionist.pages.patients.edit')
+        </div>
     </div>
     <div class="card shadow-sm border-0 mb-4">
         <div class="card-body">
             <div class="row g-3">
-                <div class="col-md-6"><strong>Full Name:</strong> {{ $patient->full_name }}</div>
+                <div class="col-md-6"><strong>Full Name:</strong> {{ $patient->name }}</div>
                 <div class="col-md-6"><strong>Email:</strong> {{ $patient->email ?? '-' }}</div>
                 <div class="col-md-6"><strong>Phone:</strong> {{ $patient->phone ?? '-' }}</div>
                 <div class="col-md-6"><strong>Gender:</strong> {{ $patient->gender ? ucfirst($patient->gender) : '-' }}</div>
@@ -42,50 +48,5 @@
             </div>
         </div>
     </div>
-    @if($patient->visits->count() > 0)
-        <div class="card shadow-sm border-0">
-            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                <h6 class="mb-0"><i class="bi bi-journal-medical me-2"></i>Patient Visits</h6>
-            </div>
-            <div class="card-body p-0">
-                <div class="table-responsive">
-                    <table class="table table-hover mb-0 align-middle">
-                        <thead class="table-light text-uppercase small">
-                            <tr>
-                                <th>Visit Date</th>
-                                <th>Action</th>
-                                <th>Findings</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($patient->visits as $visit)
-                            <tr>
-                                <td>{{ $visit->visit_date->format('M d, Y H:i') }}</td>
-                                <td>
-                                    @if($visit->action)
-                                        <span class="badge bg-success">{{ $visit->action }}</span>
-                                    @else
-                                        <span class="text-muted">-</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    @if($visit->findings)
-                                        {{ $visit->findings }}
-                                    @else
-                                        <span class="text-muted">-</span>
-                                    @endif
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    @else
-        <div class="text-center mt-3">
-            <i class="bi bi-info-circle me-1"></i>No visits recorded for this patient.
-        </div>
-    @endif
 </div>
 @endsection

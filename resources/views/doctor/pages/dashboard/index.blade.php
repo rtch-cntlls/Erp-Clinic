@@ -24,18 +24,20 @@
                     <thead class="table-light">
                         <tr>
                             <th>Patient</th>
-                            <th>Time</th>
-                            <th>Type</th>
+                            <th>Scheduled Time</th>
                             <th>Status</th>
-                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse($appointments as $appointment)
                         <tr>
-                            <td>{{ $appointment->patient->full_name }}</td>
-                            <td>{{ $appointment->appointment_date->format('M. d, Y H:i') }}</td>
-                            <td>{{ ucfirst($appointment->type) }}</td>
+                            <td>{{ $appointment->patient->name }}</td> 
+                            <td>
+                                {{ $appointment->appointment_date->format('M. d, Y') }}
+                                @if($appointment->check_in_time)
+                                    {{ \Carbon\Carbon::parse($appointment->check_in_time)->format('h:i A') }}
+                                @endif
+                            </td>                            
                             <td>
                                 @if($appointment->status == 'pending')
                                     <span class="badge bg-warning">Pending</span>
@@ -44,9 +46,6 @@
                                 @else
                                     <span class="badge bg-secondary">{{ ucfirst($appointment->status) }}</span>
                                 @endif
-                            </td>
-                            <td>
-                                <a href="" class="btn btn-sm btn-outline-primary">View</a>
                             </td>
                         </tr>
                         @empty

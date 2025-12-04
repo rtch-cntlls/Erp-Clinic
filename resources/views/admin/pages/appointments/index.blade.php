@@ -47,33 +47,30 @@
                 <table class="table table-hover align-middle mb-0">
                     <thead class="table-light">
                         <tr>
-                            <th></th>
                             <th>Patient</th>
                             <th>Doctor</th>
                             <th>Date & Time</th>
                             <th>Status</th>
-                            <th class="text-center">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse($appointments as $appointment)
                         <tr>
-                            <td>{{ $appointment->id }}</td>
-                            <td>{{ $appointment->patient->name }}</td>
+                            <td>{{ $appointment->user->name }}</td>
                             <td>{{ $appointment->doctor?->name ?? 'N/A' }}</td>
-                            <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('d M, Y h:i A') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('d M, Y') }}</td>
                             <td>
                                 @php
                                     $statusClass = match($appointment->status){
                                         'Completed' => 'success',
-                                        'Pending' => 'warning',
+                                        'Pending' => 'danger',
                                         'Cancelled' => 'danger',
                                         default => 'secondary',
                                     };
                                 @endphp
                                 <span class="badge bg-{{ $statusClass }}">{{ $appointment->status }}</span>
                             </td>
-                            <td class="text-center">
+                            {{-- <td class="text-center">
                                 <a href="{{ route('admin.appointments.edit', $appointment->id) }}" class="btn btn-sm btn-outline-warning me-1" title="Edit">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
@@ -84,7 +81,7 @@
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </form>
-                            </td>
+                            </td> --}}
                         </tr>
                         @empty
                         <tr>
