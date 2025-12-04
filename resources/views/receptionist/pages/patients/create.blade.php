@@ -29,14 +29,9 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <label for="first_name" class="form-label fw-bold small">First Name</label>
-                        <input type="text" name="first_name" id="first_name" class="form-control" placeholder="Enter first name" value="{{ old('first_name') }}" required>
+                        <label for="full_name" class="form-label fw-bold small">Full Name</label>
+                        <input type="text" name="name" id="full_name" class="form-control" placeholder="Enter full name" value="{{ old('name') }}" required>
                         <small  class="text-muted" style="font-size: 12px;">Patient's given name.</small>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="last_name" class="form-label fw-bold small">Last Name</label>
-                        <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Enter last name" value="{{ old('last_name') }}" required>
-                        <small  class="text-muted" style="font-size: 12px;">Patient's family name.</small>
                     </div>
                 </div>
                 <div class="row">

@@ -41,6 +41,10 @@ Route::get('auth/google/redirect', [PatientLoginController::class, 'redirectToGo
 Route::get('auth/google/callback', [PatientLoginController::class, 'handleGoogleCallback'])->name('google.callback');
 
 Route::get('/', [LandingController::class, 'index'])->name('patient.landing');
+Route::post('/appointment/store', [LandingController::class, 'store'])->name('patient.appointment.store');
+
+
+
 
 
 Route::get('admin/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');

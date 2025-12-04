@@ -14,8 +14,7 @@ class PatientService
 
         if ($request->search) {
             $query->where(function ($q) use ($request) {
-                $q->where('first_name', 'like', "%{$request->search}%")
-                  ->orWhere('last_name', 'like', "%{$request->search}%")
+                $q->where('name', 'like', "%{$request->search}%")
                   ->orWhere('email', 'like', "%{$request->search}%")
                   ->orWhere('phone', 'like', "%{$request->search}%");
             });
@@ -77,8 +76,7 @@ class PatientService
             foreach ($patients as $p) {
                 fputcsv($file, [
                     $p->id,
-                    $p->first_name,
-                    $p->last_name,
+                    $p->name,
                     $p->email,
                     $p->phone,
                     $p->gender,

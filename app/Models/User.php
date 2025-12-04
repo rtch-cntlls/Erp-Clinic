@@ -16,6 +16,7 @@ class User extends Authenticatable
         'password',
         'provider_name',
         'provider_id',
+        'avatar',
     ];
 
     protected $hidden = [
@@ -27,4 +28,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function patient()
+    {
+        return $this->hasOne(Patient::class);
+    }
 }

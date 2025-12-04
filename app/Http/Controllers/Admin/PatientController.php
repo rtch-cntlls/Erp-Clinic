@@ -29,10 +29,10 @@ class PatientController extends Controller
 
     public function store(Request $request)
     {
-        $this->service->createPatient($request->all());
-        return redirect()->back()
-                         ->with('success', 'Patient created successfully.');
-    }
+        $data = $request->all();
+        $this->service->createPatient($data);
+        return redirect()->back()->with('success', 'Patient created successfully.');
+    }    
 
     public function show(Patient $patient)
     {

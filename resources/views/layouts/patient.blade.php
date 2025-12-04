@@ -4,67 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Clinic')</title>
-    
-    <!-- Bootstrap & Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
-
-    <!-- Custom Styles -->
-    <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            scroll-behavior: smooth;
-        }
-
-        /* Navbar */
-        .navbar { transition: 0.3s; }
-        .navbar.scrolled { background: #fff !important; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-
-        /* Hero */
-        .hero {
-            background: url('{{ asset('images/clinic-hero.jpg') }}') center/cover no-repeat;
-            height: 80vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            text-align: center;
-            position: relative;
-        }
-        .hero::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: rgba(0,0,0,0.4);
-        }
-        .hero .container { position: relative; z-index: 2; }
-
-        .section { padding: 80px 0; }
-
-        .card:hover { transform: translateY(-5px); transition: all 0.3s ease; }
-
-        footer { background: #1e1e1e; color: #fff; }
-
-        .floating-contact {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1050;
-            width: 60px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            background: #0d6efd;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            color: #fff;
-            font-size: 1.5rem;
-            transition: 0.3s;
-        }
-        .floating-contact:hover { background: #0b5ed7; }
-    </style>
-    @stack('styles')
+    <link rel="stylesheet" href="{{ asset('css/patient.css') }}">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm py-3">
@@ -91,9 +33,17 @@
                     </li>
                     @if(Auth::check())
                         <li class="nav-item dropdown ms-3">
-                            <a class="nav-link text-dark fw-bold fs-5 d-flex align-items-center" href="#" id="patientDropdown" role="button" data-bs-toggle="dropdown">
-                                <i class="bi bi-person-circle me-1"></i>
-                            </a>
+                            <a class="nav-link text-dark fw-bold fs-5 d-flex align-items-center" 
+                            href="#" id="patientDropdown" role="button" data-bs-toggle="dropdown">
+                             @if(Auth::user()->avatar)
+                                 <img src="{{ Auth::user()->avatar }}" 
+                                      alt="Avatar"
+                                      class="rounded-circle border"
+                                      style="width: 30px; height: 30px; object-fit: cover;">
+                             @else
+                                 <i class="bi bi-person-circle fs-3"></i>
+                             @endif
+                         </a>
                             <ul class="dropdown-menu dropdown-menu-end shadow-lg" aria-labelledby="patientDropdown" style="min-width: 250px;">
                                 <li class="text-center py-3">
                                     <i class="bi bi-person-circle me-1 fs-2"></i>

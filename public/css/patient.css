@@ -1,0 +1,72 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    scroll-behavior: smooth;
+}
+
+.navbar { transition: 0.3s; }
+.navbar.scrolled { background: #fff !important; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+
+.hero {
+    background-image: url(/public/images/hero.jpg) center/cover no-repeat;
+    /* background: url('{{ asset('images/clinic-hero.jpg') }}') center/cover no-repeat; */
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-align: center;
+    position: relative;
+}
+.hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+}
+.hero .container { position: relative; z-index: 2; }
+
+.section { padding: 80px 0; }
+
+.card:hover { transform: translateY(-5px); transition: all 0.3s ease; }
+
+footer { background: #1e1e1e; color: #fff; }
+
+.floating-contact {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1050;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #0d6efd;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    color: #fff;
+    font-size: 1.5rem;
+    transition: 0.3s;
+}
+.floating-contact:hover { background: #0b5ed7; }
+
+.doctor-card {
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 2px solid transparent;
+}
+.doctor-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
+.doctor-card input:checked + div img {
+    border: 2px solid #0d6efd;
+    padding: 2px;
+    border-radius: 50%;
+}
+
+.doctor-card input:checked ~ h6,
+.doctor-card input:checked ~ small {
+    color: #0d6efd;
+    font-weight: 600;
+}

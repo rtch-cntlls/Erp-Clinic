@@ -44,7 +44,7 @@
                     <tbody>
                         @forelse($patients as $patient)
                             <tr class="align-middle">
-                                <td class="fw-semibold">{{ $patient->first_name }} {{ $patient->last_name }}</td>
+                                <td>{{ $patient->name }}</td>
                                 <td>{{ $patient->email ?? '-' }}</td>
                                 <td>{{ $patient->phone ?? '-' }}</td>
                                 <td>

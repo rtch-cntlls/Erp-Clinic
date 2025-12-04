@@ -40,6 +40,75 @@
         </div>
     </div>
 </section>
+<section id="book-appointment" class="section bg-white">
+    <div class="container">
+        <h2 class="fw-bold text-center mb-4">Book an Appointment</h2>
+        <p class="text-center text-muted mb-5">
+            Select your preferred doctor and appointment date.  
+            Our staff will assign the available time slot after review.
+        </p>
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="">
+                    @if(!Auth::check())
+                        <div class="alert alert-info text-center">
+                            <i class="bi bi-info-circle me-2"></i>
+                            Please <a href="{{ route('patient.login.form') }}">Login</a> to book an appointment.
+                        </div>
+                    @else
+                        @if(session('success'))
+                            <div class="alert alert-success text-center">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+                        <form action="{{ route('patient.appointment.store') }}" method="POST">
+                            @csrf
+                            <div class="mb-4">
+                                <label class="fw-bold form-label d-block mb-3">Select Doctor</label>
+                                <div class="d-flex overflow-auto gap-3 pb-2">
+                                    @foreach($doctors as $doctor)
+                                        <label class="card text-center flex-shrink-0 p-3 shadow-sm doctor-card" style="width: 160px;">
+                                            <input type="radio" name="doctor_id" value="{{ $doctor->id }}" class="d-none" required>
+                                            <div>
+                                                <img src="{{ $doctor->profile_image ?? asset('images/doctor-placeholder.png') }}" 
+                                                     class="doctor-img rounded-circle mb-2" width="60" height="60" alt="">
+                                            </div>
+                                            <h6 class="fw-bold mb-1" style="font-size: 0.9rem;">Dr. {{ $doctor->name }}</h6>
+                                            <small class="text-muted">{{ $doctor->specialization }}</small>
+                                        </label>
+                                    @endforeach
+                                </div>
+                            </div>                            
+                            <div class="mb-4">
+                                <label class="fw-bold form-label">Preferred Date</label>
+                                <input type="text" id="appointment-date" name="appointment_date" class="form-control shadow-sm" placeholder="Select a date" required>
+                            </div>
+                            <div class="mb-4">
+                                <label class="fw-bold form-label">Reason (optional)</label>
+                                <textarea name="reason" class="form-control shadow-sm" rows="3" placeholder="Brief reason for visit"></textarea>
+                            </div>                            
+                            <button type="submit" class="btn btn-primary shadow-sm">
+                                <i class="bi bi-calendar-check me-2"></i> Submit Appointment Request
+                            </button>
+                        </form>
+                    @endif
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section><hr>
+<link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+flatpickr("#appointment-date", {
+    altInput: true,
+    altFormat: "F j, Y",
+    dateFormat: "Y-m-d",
+    minDate: "today",
+    disableMobile: true
+});
+</script>
 <section id="about" class="section py-5">
     <div class="container">
         <h2 class="fw-bold text-center mb-4">About  <span style="color: #e60073;">Care</span><span style="color: #00bfff;">Point</span> Clinic</h2>

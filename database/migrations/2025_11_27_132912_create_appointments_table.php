@@ -16,9 +16,23 @@ return new class extends Migration
             $table->foreignId('patient_id')->constrained()->onDelete('cascade');
             $table->foreignId('doctor_id')->nullable()->constrained('doctors')->nullOnDelete();
             $table->dateTime('appointment_date');
-            $table->enum('type', ['online', 'walk-in'])->default('online'); 
-            $table->string('status')->default('Scheduled');
+            $table->enum('type', ['online', 'walk-in'])->default('online');
+            $table->enum('status', [
+                'Pending',
+                'Scheduled',
+                'Checked-In',
+                'In-Progress',
+                'Completed',
+                'Cancelled',
+                'No-Show' ])->default('Pending');
+
+            $table->string('reason')->nullable();
             $table->text('notes')->nullable();
+
+            $table->dateTime('check_in_time')->nullable();
+            $table->dateTime('completed_at')->nullable();
+            $table->dateTime('cancelled_at')->nullable();
+
             $table->timestamps();
         });
     }

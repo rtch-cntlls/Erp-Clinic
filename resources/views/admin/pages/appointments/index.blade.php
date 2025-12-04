@@ -59,7 +59,7 @@
                         @forelse($appointments as $appointment)
                         <tr>
                             <td>{{ $appointment->id }}</td>
-                            <td>{{ $appointment->patient->first_name }} {{ $appointment->patient->last_name }}</td>
+                            <td>{{ $appointment->patient->name }}</td>
                             <td>{{ $appointment->doctor?->name ?? 'N/A' }}</td>
                             <td>{{ \Carbon\Carbon::parse($appointment->appointment_date)->format('d M, Y h:i A') }}</td>
                             <td>

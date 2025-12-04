@@ -53,25 +53,31 @@ class PatientLoginController extends Controller
 
     public function redirectToGoogle()
     {
-        return Socialite::driver('google')->redirect();
+        return Socialite::driver('google')
+                        ->redirectUrl(config('services.google.redirect'))
+                        ->redirect();
     }
-
+    
     public function handleGoogleCallback()
     {
-        $googleUser = Socialite::driver('google')->stateless()->user();
-
-        $user = User::firstOrCreate(
+        $googleUser = Socialite::driver('google')
+                        ->redirectUrl(config('services.google.redirect'))
+                        ->stateless()
+                        ->user();
+    
+        $user = User::updateOrCreate(
             ['provider_id' => $googleUser->id],
             [
                 'name' => $googleUser->name,
                 'email' => $googleUser->email,
                 'provider_name' => 'google',
+                'avatar' => $googleUser->avatar,
                 'password' => null,
             ]
         );
-
+    
         Auth::login($user);
-
+    
         return redirect('/');
-    }
+    } 
 }

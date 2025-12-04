@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Patient extends Model
 {
     protected $fillable = [
-        'first_name',
-        'last_name',
+        'user_id',
+        'name',
         'email',
         'phone',
         'dob',
@@ -26,9 +26,9 @@ class Patient extends Model
         'dob' => 'date',
     ];
 
-    public function getFullNameAttribute()
+    public function user()
     {
-        return "{$this->first_name} {$this->last_name}";
+        return $this->belongsTo(User::class);
     }
 
     public function visits()
