@@ -26,9 +26,13 @@ class DoctorPatientController extends Controller
         $doctor = auth()->guard('doctor')->user();
         $patient = Patient::findOrFail($id);
         $medicines = Inventory::orderBy('name')->get();
-    
-        return view('doctor.pages.patients.show', compact('patient', 'doctor', 'medicines'));
-    }    
+
+        $appointment = Appointment::where('patient_id', $id)
+                                ->where('status', 'Scheduled')
+                                ->first();
+
+        return view('doctor.pages.patients.show', compact('patient', 'doctor', 'medicines', 'appointment'));
+    }
 
     public function storeVisit(Request $request, $patientId)
     {
@@ -51,6 +55,7 @@ class DoctorPatientController extends Controller
 
         if ($request->appointment_id) {
             $appointment = Appointment::find($request->appointment_id);
+            
             if ($appointment) {
                 $appointment->status = 'Completed';
                 $appointment->completed_at = now();
@@ -66,6 +71,8 @@ class DoctorPatientController extends Controller
         $request->validate([
             'medicine_id.*' => 'required|exists:inventories,id',
             'quantity.*'    => 'required|integer|min:1',
+            'dosage.*'      => 'nullable|string|max:255',
+            'duration.*'    => 'nullable|string|max:255',
         ]);
     
         $doctor = auth()->guard('doctor')->user();
@@ -78,17 +85,18 @@ class DoctorPatientController extends Controller
     
         foreach ($request->medicine_id as $i => $medicineId) {
             $inventory = Inventory::find($medicineId);
-    
             if (!$inventory) continue;
     
             PrescriptionItem::create([
                 'prescription_id' => $prescription->id,
                 'medicine_id'     => $inventory->id,
                 'quantity'        => $request->quantity[$i],
-                'unit_price'      => $inventory->unit_price, 
+                'unit_price'      => $inventory->unit_price,
+                'dosage'          => $request->dosage[$i] ?? null,
+                'duration'        => $request->duration[$i] ?? null,
             ]);
         }
     
         return back()->with('success', 'Prescription created successfully.');
-    }    
+    }      
 }

@@ -58,7 +58,7 @@
                     <tbody>
                         @forelse($prescriptions as $prescription)
                         <tr>
-                            <td>{{ $prescription->patient->first_name }} {{ $prescription->patient->last_name }}</td>
+                            <td>{{ $prescription->patient->name }}</td>
                             <td>{{ $prescription->doctor->name }}</td>
                             <td>
                                 <span class="badge 

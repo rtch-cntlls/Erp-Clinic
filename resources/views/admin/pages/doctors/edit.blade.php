@@ -1,6 +1,6 @@
 <div class="modal fade create-patient" id="editDoctorModal{{ $doctor->id }}" tabindex="-1" aria-labelledby="editDoctorModalLabel{{ $doctor->id }}" aria-hidden="true">
     <div class="modal-dialog modal-lg">
-        <div class="modal-content rounded-4 shadow-sm">
+        <div class="modal-content shadow-sm">
             <div class="modal-header border-0">
                 <h5 class="modal-title fw-bold" id="editDoctorModalLabel{{ $doctor->id }}">
                     <i class="bi bi-pencil-square me-2"></i> Edit Doctor

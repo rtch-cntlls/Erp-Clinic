@@ -36,7 +36,7 @@
                             <td>{{ $item->category }}</td>
                             <td>{{ $item->quantity }}</td>
                             <td>{{ $item->unit }}</td>
-                            <td>{{ $item->created_at->format('Y-m-d') }}</td>
+                            <td>{{ $item->created_at->format('M. d, Y') }}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -59,7 +59,7 @@
                         <tr>
                             <td>{{ $dispense->admin->name ?? '-' }}</td>
                             <td>{{ number_format($dispense->total_amount, 2) }}</td>
-                            <td>{{ \Carbon\Carbon::parse($dispense->dispense_date)->format('Y-m-d') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($dispense->dispense_date)->format('M. d, Y') }}</td>
                         </tr>
                     @endforeach
                 </tbody>

@@ -27,7 +27,6 @@
                 <table class="table table-striped table-hover align-middle mb-0">
                     <thead class="table-light text-muted">
                         <tr>
-                            <th>No.</th>
                             <th>Patient</th>
                             <th>Doctor</th>
                             <th>Status</th>
@@ -38,8 +37,7 @@
                     <tbody>
                         @forelse($prescriptions as $index => $prescription)
                             <tr>
-                                <td>{{ $index + 1 }}</td>
-                                <td>{{ $prescription->patient->first_name }} {{ $prescription->patient->last_name }}</td>
+                                <td>{{ $prescription->patient->name }}</td>
                                 <td>{{ $prescription->doctor->name }}</td>
                                 <td>
                                     @if($prescription->status == 'pending')

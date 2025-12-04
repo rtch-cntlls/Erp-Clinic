@@ -25,7 +25,7 @@
     <div class="card shadow-sm border-0 mb-4">
         <div class="card-body">
             <div class="row g-3">
-                <div class="col-md-6"><strong>Full Name:</strong> {{ $patient->full_name }}</div>
+                <div class="col-md-6"><strong>Full Name:</strong> {{ $patient->name }}</div>
                 <div class="col-md-6"><strong>Email:</strong> {{ $patient->email ?? '-' }}</div>
                 <div class="col-md-6"><strong>Phone:</strong> {{ $patient->phone ?? '-' }}</div>
                 <div class="col-md-6"><strong>Gender:</strong> {{ $patient->gender ? ucfirst($patient->gender) : '-' }}</div>

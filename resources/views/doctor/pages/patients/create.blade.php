@@ -3,6 +3,7 @@
         <div class="modal-content border-0 shadow-lg rounded-3">
             <form action="{{ route('doctor.patients.visits.store', $patient->id) }}" method="POST">
                 @csrf
+                <input type="hidden" name="appointment_id" value="{{ $appointment->id ?? '' }}">
                 <div class="modal-header">
                     <h5 class="modal-title fw-bold" id="addVisitModalLabel">
                         <i class="bi bi-journal-plus me-2"></i>Add Patient Visit

@@ -103,17 +103,17 @@
                                     <span class="badge bg-secondary">Inactive</span>
                                 @endif
                             </td>
-                            <td class="d-flex gap-2 align-items-center ">
+                            <td class="text-center">
                                 <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editPharmacistModal{{ $ph->id }}">
-                                    </i> Edit
+                                    <i class="bi bi-pencil-square"></i>
                                 </button>
-                                <form action="{{ route('admin.pharmacists.toggleStatus', $ph->id) }}" method="POST">
+                                <form  action="{{ route('admin.pharmacists.toggleStatus', $ph->id) }}" method="POST" class="d-inline">
                                     @csrf
                                     <button type="submit" 
                                             class="btn btn-sm {{ $ph->status ? 'btn-outline-danger' : 'btn-outline-success' }}">
                                         {{ $ph->status ? 'Deactivate' : 'Activate' }}
                                     </button>
-                                </form>                                
+                                </form>
                                 @include('admin.pages.pharmacists.edit')
                             </td>
                         </tr>

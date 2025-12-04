@@ -17,6 +17,8 @@ return new class extends Migration
             $table->foreignId('medicine_id')->constrained('inventories')->onDelete('cascade');
             $table->integer('quantity');
             $table->decimal('unit_price', 10, 2)->nullable();
+            $table->string('dosage')->nullable();
+            $table->string('duration')->nullable(); 
             $table->timestamps();
         });
     }
