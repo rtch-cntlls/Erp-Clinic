@@ -6,24 +6,21 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('dispensings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('prescription_id')->constrained()->onDelete('cascade');
-            $table->foreignId('dispensed_by'); 
-            $table->decimal('total_amount', 12, 2);
-            $table->timestamp('dispense_date');
+            $table->foreignId('pharmacist_id')->constrained()->onDelete('cascade');
+            $table->foreignId('patient_id')->constrained()->onDelete('cascade');
+            $table->decimal('subtotal', 12, 2)->default(0);
+            $table->enum('status', ['pending', 'dispensed'])->default('pending');
+            $table->timestamp('dispensed_at')->nullable();
+
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('dispensings');

@@ -2,22 +2,41 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Dispense extends Model
 {
-    protected $table = 'dispensings'; 
+    use HasFactory;
+
+    protected $table = 'dispensings';
+
     protected $fillable = [
         'prescription_id',
-         'dispensed_by', 
-         'total_amount', 
-         'dispense_date'];
+        'pharmacist_id',
+        'patient_id',
+        'subtotal',
+        'total_amount',
+        'status',
+        'dispensed_at',
+    ];
 
-    public function prescription() {
+    protected $casts = [
+        'dispensed_at' => 'datetime',
+    ];
+
+    public function prescription()
+    {
         return $this->belongsTo(Prescription::class);
     }
 
-    public function admin() {
-        return $this->belongsTo(Admin::class, 'dispensed_by');
+    public function pharmacist()
+    {
+        return $this->belongsTo(Pharmacist::class);
+    }
+
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class);
     }
 }

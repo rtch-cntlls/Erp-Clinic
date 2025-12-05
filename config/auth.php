@@ -60,6 +60,12 @@ return [
             'driver' => 'session',
             'provider' => 'receptionists',
         ],
+
+        'cashier' => [
+            'driver' => 'session',
+            'provider' => 'cashiers',
+        ],
+
     ],
 
     /*
@@ -104,6 +110,12 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Receptionist::class,
         ],
+
+        'cashiers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Cashier::class,
+        ],
+
     ],
 
     /*

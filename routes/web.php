@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\PharmacyController;
 use App\Http\Controllers\Admin\BillingController;
 use App\Http\Controllers\Admin\PharmacistController; 
 use App\Http\Controllers\Admin\ReceptionistController; 
+use App\Http\Controllers\Admin\CashierController; 
 use App\Http\Controllers\Auth\AdminLoginController;
 
 use App\Http\Middleware\DoctorAuth;
@@ -29,6 +30,13 @@ use App\Http\Middleware\ReceptionistAuth;
 use App\Http\Controllers\Receptionist\ReceptionistDashboardController;
 use App\Http\Controllers\Receptionist\ReceptionistPatientController;
 use App\Http\Controllers\Receptionist\ReceptionistAppointmentController;
+
+use App\Http\Middleware\CashierAuth;
+use App\Http\Controllers\Cashier\CashierDashboardController;
+use App\Http\Controllers\Cashier\CashierInvoiceController;
+use App\Http\Controllers\Cashier\CashierProfileController;
+use App\Http\Controllers\Auth\CashierLoginController;
+
 
 use App\Http\Middleware\PatientAuth;
 use App\Http\Controllers\Auth\PatientLoginController;
@@ -134,6 +142,16 @@ Route::middleware([AdminAuth::class])->group(function () {
         Route::post('/store', [BillingController::class, 'store'])->name('store');
         Route::get('/{billing}', [BillingController::class, 'show'])->name('show');
     });
+
+    Route::prefix('admin/cashiers')->name('admin.cashiers.')->group(function () {
+        Route::get('/', [CashierController::class, 'index'])->name('index');
+        Route::get('/create', [CashierController::class, 'create'])->name('create');
+        Route::post('/store', [CashierController::class, 'store'])->name('store');
+        Route::get('/{cashier}/edit', [CashierController::class, 'edit'])->name('edit');
+        Route::post('/{cashier}', [CashierController::class, 'update'])->name('update');
+        Route::post('/{cashier}/toggle-status', [CashierController::class, 'toggleStatus'])->name('toggleStatus');
+    });
+
 });
 
 Route::middleware([DoctorAuth::class])->group(function () {
@@ -198,4 +216,26 @@ Route::middleware([ReceptionistAuth::class])->group(function () {
     });
 
     Route::post('/logout', [ReceptionistLoginController::class, 'logout'])->name('logout');
+});
+
+
+Route::middleware([CashierAuth::class])->group(function () {
+
+    Route::prefix('cashier/dashboard')->name('cashier.dashboard.')->group(function () {
+        Route::get('/', [CashierDashboardController::class, 'index'])->name('index');
+    });
+
+    Route::prefix('cashier/invoices')->name('cashier.invoices.')->group(function () {
+        Route::get('/', [CashierInvoiceController::class, 'index'])->name('index');
+        Route::get('/create', [CashierInvoiceController::class, 'create'])->name('create');
+        Route::post('/store', [CashierInvoiceController::class, 'store'])->name('store');
+        Route::get('/{invoice}/edit', [CashierInvoiceController::class, 'edit'])->name('edit');
+        Route::post('/{invoice}', [CashierInvoiceController::class, 'update'])->name('update');
+        Route::post('/{invoice}/paid', [CashierInvoiceController::class, 'markPaid'])->name('paid');
+    });
+
+    Route::prefix('cashier/profile')->name('cashier.profile.')->group(function () {
+        Route::get('/', [CashierProfileController::class, 'index'])->name('index');
+        Route::post('/update', [CashierProfileController::class, 'update'])->name('update');
+    });
 });

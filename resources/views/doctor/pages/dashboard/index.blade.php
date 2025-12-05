@@ -31,7 +31,7 @@
                     <tbody>
                         @forelse($appointments as $appointment)
                         <tr>
-                            <td>{{ $appointment->patient->name }}</td> 
+                            <td>{{ $appointment->patient->name ?? 'N/A' }}</td> 
                             <td>
                                 {{ $appointment->appointment_date->format('M. d, Y') }}
                                 @if($appointment->check_in_time)

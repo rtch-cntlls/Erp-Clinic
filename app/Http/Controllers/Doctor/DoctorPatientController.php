@@ -10,6 +10,8 @@ use App\Models\Appointment;
 use App\Models\Inventory;
 use App\Models\Prescription;
 use App\Models\PrescriptionItem;
+use App\Models\Billing;
+use Illuminate\Support\Str;
 
 class DoctorPatientController extends Controller
 {
@@ -42,9 +44,9 @@ class DoctorPatientController extends Controller
             'findings'   => 'nullable|string',
             'appointment_id' => 'nullable|exists:appointments,id',
         ]);
-
+    
         $doctorId = auth()->guard('doctor')->id();
-
+    
         $visit = PatientVisit::create([
             'patient_id' => $patientId,
             'visit_date' => $request->visit_date,
@@ -52,10 +54,9 @@ class DoctorPatientController extends Controller
             'findings'   => $request->findings,
             'doctor_id'  => $doctorId,
         ]);
-
+    
         if ($request->appointment_id) {
             $appointment = Appointment::find($request->appointment_id);
-            
             if ($appointment) {
                 $appointment->status = 'Completed';
                 $appointment->completed_at = now();
@@ -63,7 +64,20 @@ class DoctorPatientController extends Controller
             }
         }
 
-        return redirect()->back()->with('success', 'Patient visit added successfully.');
+        Billing::create([
+            'patient_id'     => $patientId,
+            'appointment_id' => $request->appointment_id ?? null,
+            'cashier_id'     => null,
+            'invoice_no'     => 'INV-' . Str::upper(Str::random(8)),
+            'amount'         => 0,
+            'discount'       => 0,
+            'total_amount'   => 500,
+            'status'         => 'unpaid',
+            'payment_method' => null,
+            'notes'          => 'Generated from doctor visit',
+        ]);
+    
+        return redirect()->back()->with('success', 'Patient visit added successfully, billing generated.');
     }
 
     public function storePrescription(Request $request, $patientId)
