@@ -21,4 +21,4 @@ class Receptionist extends Authenticatable
     protected $hidden = [
         'password',
     ];
-}
+}   

@@ -7,9 +7,20 @@ use Illuminate\Support\Facades\DB;
 
 class DoctorService
 {
-    public function getAllPaginated($perPage = 10)
+    public function getAllPaginated($perPage = 10, $search = null)
     {
-        return Doctor::latest()->paginate($perPage);
+        $query = Doctor::query();
+
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                $q->where('first_name', 'like', "%$search%")
+                ->orWhere('last_name', 'like', "%$search%")
+                ->orWhere('email', 'like', "%$search%")
+                ->orWhere('phone', 'like', "%$search%");
+            });
+        }
+
+        return $query->latest()->paginate($perPage)->withQueryString();
     }
 
     public function getDashboardCards()
@@ -37,12 +48,6 @@ class DoctorService
                 'title' => 'Inactive',
                 'value' => $inactive,
                 'color' => 'text-danger'
-            ],
-            [
-                'icon' => 'bi-star',
-                'title' => 'Specializations',
-                'value' => $specializations,
-                'color' => 'text-warning'
             ],
         ];
     }

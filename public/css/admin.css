@@ -1,3 +1,29 @@
 .new-log input, .new-log textarea, .create-patient input, .create-patient select, .create-patient textarea{
     font-size: 14px;
 }
+.transition-hover {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: #fff;
+}
+.transition-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+}
+
+.bar-chart {
+    width: 50px;
+    height: 30px;
+}
+.bar-chart .bar {
+    width: 6px;
+    border-radius: 2px 2px 0 0;
+    background: linear-gradient(to bottom, #ffffff, #00bfff);
+    transition: height 0.3s ease;
+}
+h6 {
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+h3 {
+    font-size: 1.5rem;
+}

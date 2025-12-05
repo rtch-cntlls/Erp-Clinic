@@ -1,83 +1,61 @@
 @extends('layouts.admin')
-@section('title', 'Dashboard')
+@section('title', 'Admin Dashboard')
 @section('content')
 <div class="container">
-    <div class="row g-3 mb-4">
-        <div class="col-md-3">
-            <div class="p-4 bg-white border shadow-sm text-center">
-                <h6 class="text-muted mb-2">Total Patients</h6>
-                <h3 class="fw-bold">{{ $totalPatients }}</h3>
-                <i class="bi bi-people-fill fs-3 text-primary"></i>
-            </div>
+    <div class="row align-items-center mb-4 bg-light shadow-sm">
+        <div class="col-md-4 text-center text-md-start">
+            <img src="{{ asset('images/header.png') }}" alt="Welcome" class="img-fluid">
         </div>
-        <div class="col-md-3">
-            <div class="p-4 bg-white border shadow-sm text-center">
-                <h6 class="text-muted mb-2">Total Doctors</h6>
-                <h3 class="fw-bold">{{ $totalDoctors }}</h3>
-                <i class="bi bi-person-badge-fill fs-3 text-danger"></i>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="p-4 bg-white border shadow-sm text-center">
-                <h6 class="text-muted mb-2">Appointments Today</h6>
-                <h3 class="fw-bold">{{ $appointmentsToday }}</h3>
-                <i class="bi bi-calendar-check-fill fs-3 text-success"></i>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="p-4 bg-white border shadow-sm text-center">
-                <h6 class="text-muted mb-2">Revenue This Month</h6>
-                <h3 class="fw-bold">₱{{ number_format($revenueThisMonth, 2) }}</h3>
-                <span class="fs-3 text-warning">₱</span>
-            </div>
+        <div class="col-md-8 mt-3 mt-md-0">
+            <h2 class="fw-bold" style="color: #00bfff;">Welcome Back, Admin!</h2>
+            <p class=" text-muted">
+                Here’s a quick overview of your clinic’s activities. Check patients, staff, and statistics at a glance.
+            </p>
         </div>
     </div>
-
-    <div class="row g-4 mb-4">
-        <div class="col-lg-6">
-            <div class="p-4 shadow-sm" style="background-color: #ffffff;">
-                <h5 class="fw-semibold text-primary mb-3"><i class="bi bi-bar-chart-line me-2"></i>Monthly Visits</h5>
-                <canvas id="visitsChart" height="200"></canvas>
-            </div>
+    <div class="row">
+        <div class="col-md-6">
+             <div class="row g-3">
+                 @foreach($cards as $card)
+                     <div class="col-md-6">
+                         <div class="card border-0 shadow-sm p-3 transition-hover">
+                            <div class="d-flex align-items-center mb-3 gap-3">
+                                <div class="icon-wrapper fs-5">
+                                    <i class="bi {{ $card['icon'] }} {{ $card['color'] }}"></i>
+                                </div>
+                                <h6 class="mb-0 text-uppercase fw-bold">{{ $card['title'] }}</h6>
+                            </div>
+                            <div class="d-flex align-items-end justify-content-between">
+                                <h4 class="fw-bold mb-0">{{ $card['value'] }}</h4>
+                                <div class="bar-chart d-flex align-items-end gap-1">
+                                    <div class="bar" style="height: 80%;"></div>
+                                    <div class="bar" style="height: 60%;"></div>
+                                    <div class="bar" style="height: 70%;"></div>
+                                    <div class="bar" style="height: 90%;"></div>
+                                </div>
+                            </div>
+                            @if(isset($card['route']))
+                                <a href="{{ $card['route'] }}" class=" mt-3 small text-decoration-none text-primary">View All &raquo;</a>
+                            @endif
+                         </div>
+                     </div>
+                 @endforeach
+             </div>
         </div>
-        <div class="col-lg-6">
-            <div class="p-4 shadow-sm" style="background-color: #ffffff;">
-                <h5 class="fw-semibold text-primary mb-3"><span>₱</span> Revenue Trends</h5>
-                <canvas id="revenueChart" height="200"></canvas>
-            </div>
-        </div>
-    </div>
-
-    <div class="row g-4">
-        <div class="col-lg-6">
-            <div class="p-4 rounded-4 shadow-sm" style="background-color: #f9f9f9;">
-                <h5 class="fw-semibold text-primary mb-3"><i class="bi bi-clock-history me-2"></i>Upcoming Appointments</h5>
-                <ul class="list-group list-group-flush">
-                    @forelse($upcomingAppointments as $appt)
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        {{ $appt->patient?->name ?? $appt->user->name ?? 'Unknown' }}
-                        <span class="badge bg-info text-dark">{{ $appt->appointment_date->format('M d, Y') }}</span>
-                    </li>
-                    @empty
-                    <li class="list-group-item text-center text-muted">No upcoming appointments</li>
-                    @endforelse
-                </ul>
-            </div>
-        </div>
-
-        <div class="col-lg-6">
-            <div class="p-4 rounded-4 shadow-sm" style="background-color: #f9f9f9;">
-                <h5 class="fw-semibold text-primary mb-3"><i class="bi bi-people-fill me-2"></i>New Patients This Month</h5>
-                <ul class="list-group list-group-flush">
-                    @forelse($newPatients as $p)
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        {{ $p->name }}
-                        <span class="text-muted small">{{ $p->created_at->format('M d') }}</span>
-                    </li>
-                    @empty
-                    <li class="list-group-item text-center text-muted">No new patients this month</li>
-                    @endforelse
-                </ul>
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm p-3">
+                <h6 class="fw-bold mb-3">Patient Gender Distribution</h6>
+                <canvas id="genderChart" height="200"></canvas>
+                <div class="mt-3 d-flex justify-content-between">
+                    <div>
+                        <span class="fw-bold">Male:</span> {{ $malePatients }} 
+                        <span class="text-success">({{ $maleGrowth }}% vs last week)</span>
+                    </div>
+                    <div>
+                        <span class="fw-bold">Female:</span> {{ $femalePatients }} 
+                        <span class="text-success">({{ $femaleGrowth }}% vs last week)</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -85,43 +63,37 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    const visitsCtx = document.getElementById('visitsChart').getContext('2d');
-    new Chart(visitsCtx, {
-        type: 'line',
-        data: {
-            labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
-            datasets: [{
-                label: 'Visits',
-                data: [
-                    @for($m=1; $m<=12; $m++)
-                        {{ $monthlyVisits[$m] }}, 
-                    @endfor
-                ],
-                borderColor: '#0d6efd',
-                backgroundColor: 'rgba(13,110,253,0.1)',
-                fill: true,
-                tension: 0.3
-            }]
+const ctx = document.getElementById('genderChart').getContext('2d');
+const genderChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Male', 'Female'],
+        datasets: [{
+            label: 'Patients',
+            data: [{{ $malePatients }}, {{ $femalePatients }}],
+            backgroundColor: ['#0d6efd', '#d63384'],
+            borderRadius: 6
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { display: false },
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        return context.parsed.y + ' Patients';
+                    }
+                }
+            }
         },
-        options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
-    });
-
-    const revenueCtx = document.getElementById('revenueChart').getContext('2d');
-    new Chart(revenueCtx, {
-        type: 'bar',
-        data: {
-            labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
-            datasets: [{
-                label: 'Revenue',
-                data: [
-                    @for($m=1; $m<=12; $m++)
-                        {{ $monthlyRevenue[$m] }}, 
-                    @endfor
-                ],
-                backgroundColor: '#ffc107'
-            }]
-        },
-        options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
-    });
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: { stepSize: 5 }
+            }
+        }
+    }
+});
 </script>
 @endsection

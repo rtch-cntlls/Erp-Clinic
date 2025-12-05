@@ -6,6 +6,7 @@
     <title>Clinic ERP - @yield('title')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="{{ asset('css/admin-layout.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
 </head>
@@ -13,7 +14,9 @@
     <div class="sidebar d-flex flex-column p-3">
         <div class="d-flex justify-content-center align-items-center">
             <img src="{{ asset('images/logo.png') }}" alt="CarePoint Logo" style="width: 50px; height: auto; margin-right: 10px;">
-            <h5 class="fw-bold text-primary mb-0">CarePoint</h5>
+            <h5 class="fw-bold text-primary mb-0">
+                <span style="color: #e60073;">Care</span><span style="color: #00bfff;">Point</span>
+            </h5>
         </div>  <hr>      
         <a href="{{ route('admin.pages.dashboard.index') }}" class="{{ request()->routeIs('admin.pages.dashboard.index') ? 'active' : '' }}">
             <i class="bi bi-house-door"></i> Dashboard
@@ -57,7 +60,6 @@
     <div class="content">
         @yield('content')
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

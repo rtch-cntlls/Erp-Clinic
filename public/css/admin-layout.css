@@ -52,7 +52,7 @@ body {
     color: #0d6efd;
 }
 .sidebar a.active {
-    background-color: #0d6efd;
+    background-color: #00bfff;
     color: #fff;
     font-weight: 600;
 }
@@ -64,6 +64,9 @@ body {
 .content {
     margin-left: 220px;
     padding: 30px;
+}
+table{
+    font-size: 14px;
 }
 @media (max-width: 768px) {
     .sidebar {

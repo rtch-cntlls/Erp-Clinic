@@ -7,17 +7,29 @@
             <i class="bi bi-people-fill me-2"></i>Patients Management
         </h4>
     </div>
-    <div class="row g-3 mb-3">
-        @foreach ($cards as $card)
-            <div class="col-md-4">
-                <div class="card shadow-sm p-3 text-center">
-                    <i class="bi {{ $card['icon'] }} fs-2 {{ $card['color'] }} mb-2"></i>
-                    <h6 class="text-muted mb-1">{{ $card['title'] }}</h6>
-                    <h4 class="fw-bold {{ $card['color'] }}">{{ $card['value'] }}</h4>
+    <div class="row g-4 mb-4">
+        @foreach($cards as $card)
+            <div class="col-md-3">
+                <div class="card border-0 shadow-sm p-3 transition-hover">
+                    <div class="d-flex align-items-center mb-3 gap-3">
+                        <div class="icon-wrapper">
+                            <i class="bi {{ $card['icon'] }} {{ $card['color'] }}"></i>
+                        </div>
+                        <h6 class="mb-0 text-uppercase fw-bold">{{ $card['title'] }}</h6>
+                    </div>
+                    <div class="d-flex align-items-end justify-content-between">
+                        <h4 class="fw-bold mb-0">{{ $card['value'] }}</h4>
+                        <div class="bar-chart d-flex align-items-end gap-1">
+                            <div class="bar" style="height: 80%"></div>
+                            <div class="bar" style="height: 60%"></div>
+                            <div class="bar" style="height: 70%"></div>
+                            <div class="bar" style="height: 90%"></div>
+                        </div>
+                    </div>                    
                 </div>
             </div>
         @endforeach
-    </div>    
+    </div>   
     <div class="d-flex justify-content-between align-items-center mb-3">
         <form method="GET" action="{{ route('admin.patients.index') }}">
             <div class="input-group rounded-3 shadow-sm border" style="overflow: hidden; width: 500px;">

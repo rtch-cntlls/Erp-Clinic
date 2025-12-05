@@ -102,9 +102,12 @@ Route::middleware([AdminAuth::class])->group(function () {
         Route::get('/', [DoctorController::class, 'index'])->name('index');
         Route::get('/create', [DoctorController::class, 'create'])->name('create');
         Route::post('/store', [DoctorController::class, 'store'])->name('store');
-        Route::get('/{doctor}/edit', [DoctorController::class, 'edit'])->name('edit');
+        Route::get('/{doctor}/show', [DoctorController::class, 'show'])->name('show');
         Route::post('/{doctor}', [DoctorController::class, 'update'])->name('update');
         Route::post('/{doctor}/toggle-status', [DoctorController::class, 'toggleStatus'])->name('toggleStatus');
+
+        Route::get('/export/csv', [DoctorController::class, 'exportCsv'])->name('export.csv');
+        Route::get('/export/pdf', [DoctorController::class, 'exportPdf'])->name('export.pdf');
     });
 
     Route::prefix('admin/inventory')->name('admin.inventory.')->group(function () {
