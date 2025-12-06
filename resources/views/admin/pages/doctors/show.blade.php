@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 @section('title', 'Doctor Details')
 @section('content')
-<div class="container">
+<div>
     <div class="d-flex gap-2 align-items-center mb-4">
         <a href="{{ route('admin.doctors.index') }}" class="btn btn-outline-secondary btn-sm">
             <i class="bi bi-arrow-left-circle me-1"></i> Back

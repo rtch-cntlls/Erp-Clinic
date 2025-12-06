@@ -2,10 +2,10 @@
 @section('title', 'Doctors')
 @section('content')
 @include('components.sweetAlert')
-<div class="container">
-    <div class="d-flex justify-content-between align-items-center mb-2">
-        <h4 class="fw-bold text-dark">
-            <i class="bi bi-person-badge me-2"></i> Doctors Management
+<div>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="m-0 fw-bold text-dark">
+            <i class="bi bi-person-badge me-2"></i>Doctors Management
         </h4>   
         <a href="{{ route('admin.doctors.create') }}" class="btn btn-outline-primary d-flex align-items-center">
             <i class="bi bi-plus-circle me-1"></i> Add Doctor

@@ -149,10 +149,12 @@ Route::middleware([AdminAuth::class])->group(function () {
     Route::prefix('admin/cashiers')->name('admin.cashiers.')->group(function () {
         Route::get('/', [CashierController::class, 'index'])->name('index');
         Route::get('/create', [CashierController::class, 'create'])->name('create');
+        Route::get('/{cashier}', [CashierController::class, 'show'])->name('show');
         Route::post('/store', [CashierController::class, 'store'])->name('store');
-        Route::get('/{cashier}/edit', [CashierController::class, 'edit'])->name('edit');
         Route::post('/{cashier}', [CashierController::class, 'update'])->name('update');
         Route::post('/{cashier}/toggle-status', [CashierController::class, 'toggleStatus'])->name('toggleStatus');
+        Route::get('/export/csv', [CashierController::class, 'exportCsv'])->name('export.csv');
+        Route::get('/export/pdf', [CashierController::class, 'exportPdf'])->name('export.pdf');
     });
 
 });

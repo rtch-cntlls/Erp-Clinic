@@ -11,8 +11,6 @@
                 @csrf
                 <div class="modal-body">
                     <div class="row g-3">
-
-                        <!-- First Name -->
                         <div class="col-md-6">
                             <div class="form-floating">
                                 <input type="text" name="first_name" class="form-control rounded-3 @error('first_name') is-invalid @enderror" 
@@ -23,8 +21,6 @@
                                 @enderror
                             </div>
                         </div>
-
-                        <!-- Last Name -->
                         <div class="col-md-6">
                             <div class="form-floating">
                                 <input type="text" name="last_name" class="form-control rounded-3 @error('last_name') is-invalid @enderror" 
@@ -35,8 +31,6 @@
                                 @enderror
                             </div>
                         </div>
-
-                        <!-- Email -->
                         <div class="col-md-6">
                             <div class="form-floating">
                                 <input type="email" name="email" class="form-control rounded-3 @error('email') is-invalid @enderror" 
@@ -47,8 +41,6 @@
                                 @enderror
                             </div>
                         </div>
-
-                        <!-- Phone -->
                         <div class="col-md-6">
                             <div class="form-floating">
                                 <input type="text" name="phone" class="form-control rounded-3 @error('phone') is-invalid @enderror" 
@@ -59,8 +51,6 @@
                                 @enderror
                             </div>
                         </div>
-
-                        <!-- Gender -->
                         <div class="col-md-6">
                             <div class="form-floating">
                                 <select name="gender" class="form-select rounded-3 @error('gender') is-invalid @enderror" id="gender{{ $doctor->id }}">
@@ -74,8 +64,6 @@
                                 @enderror
                             </div>
                         </div>
-
-                        <!-- Birthdate -->
                         <div class="col-md-6">
                             <div class="form-floating">
                                 <input type="date" name="birthdate" class="form-control rounded-3 @error('birthdate') is-invalid @enderror" 
@@ -86,8 +74,6 @@
                                 @enderror
                             </div>
                         </div>
-
-                        <!-- License No -->
                         <div class="col-md-4">
                             <div class="form-floating">
                                 <input type="text" name="license_no" class="form-control rounded-3 @error('license_no') is-invalid @enderror" 
@@ -98,8 +84,6 @@
                                 @enderror
                             </div>
                         </div>
-
-                        <!-- PTR No -->
                         <div class="col-md-4">
                             <div class="form-floating">
                                 <input type="text" name="ptr_no" class="form-control rounded-3 @error('ptr_no') is-invalid @enderror" 
@@ -110,8 +94,6 @@
                                 @enderror
                             </div>
                         </div>
-
-                        <!-- S2 No -->
                         <div class="col-md-4">
                             <div class="form-floating">
                                 <input type="text" name="s2_no" class="form-control rounded-3 @error('s2_no') is-invalid @enderror" 
@@ -122,8 +104,6 @@
                                 @enderror
                             </div>
                         </div>
-
-                        <!-- Specialization -->
                         <div class="col-md-6">
                             <div class="form-floating">
                                 <select name="specialization" class="form-select rounded-3 @error('specialization') is-invalid @enderror" id="specialization{{ $doctor->id }}">
@@ -150,8 +130,6 @@
                                 @enderror
                             </div>
                         </div>
-
-                        <!-- Sub Specialization -->
                         <div class="col-md-6">
                             <div class="form-floating">
                                 <select name="sub_specialization" class="form-select rounded-3 @error('sub_specialization') is-invalid @enderror" id="subSpecialization{{ $doctor->id }}">
@@ -174,8 +152,6 @@
                                 @enderror
                             </div>
                         </div>
-
-                        <!-- Address -->
                         <div class="col-md-12">
                             <div class="form-floating">
                                 <textarea name="address" class="form-control rounded-3 @error('address') is-invalid @enderror" 
@@ -186,8 +162,6 @@
                                 @enderror
                             </div>
                         </div>
-
-                        <!-- Bio -->
                         <div class="col-md-12">
                             <div class="form-floating">
                                 <textarea name="bio" class="form-control rounded-3 @error('bio') is-invalid @enderror" 
@@ -198,8 +172,6 @@
                                 @enderror
                             </div>
                         </div>
-
-                        <!-- Profile Image -->
                         <div class="col-md-6">
                             <label for="profile_image{{ $doctor->id }}" class="form-label fw-bold">Profile Image</label>
                             <input type="file" name="profile_image" id="profile_image{{ $doctor->id }}" class="form-control @error('profile_image') is-invalid @enderror">
@@ -213,8 +185,6 @@
                                 </div>
                             @endif
                         </div>
-
-                        <!-- Status -->
                         <div class="col-md-6">
                             <div class="form-floating">
                                 <select name="status" class="form-select rounded-3 @error('status') is-invalid @enderror" id="status{{ $doctor->id }}">
@@ -227,7 +197,6 @@
                                 @enderror
                             </div>
                         </div>
-
                     </div>
                 </div>
                 <div class="modal-footer border-0">

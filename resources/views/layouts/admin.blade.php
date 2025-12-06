@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{{ asset('css/admin-layout.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
 </head>
+
 <body>
     <div class="sidebar d-flex flex-column p-3">
         <div class="d-flex justify-content-center align-items-center">
@@ -17,7 +18,9 @@
             <h5 class="fw-bold text-primary mb-0">
                 <span style="color: #e60073;">Care</span><span style="color: #00bfff;">Point</span>
             </h5>
-        </div>  <hr>      
+        </div>
+        <hr>      
+
         <a href="{{ route('admin.pages.dashboard.index') }}" class="{{ request()->routeIs('admin.pages.dashboard.index') ? 'active' : '' }}">
             <i class="bi bi-house-door"></i> Dashboard
         </a>
@@ -38,7 +41,7 @@
         </a>
         <a href="{{ route('admin.cashiers.index') }}" class="{{ request()->routeIs('admin.cashiers.*') ? 'active' : '' }}">
             <i class="bi bi-person-badge"></i> Cashiers
-        </a>        
+        </a>
         <a href="{{ route('admin.inventory.index') }}" class="{{ request()->routeIs('admin.inventory.*') ? 'active' : '' }}">
             <i class="bi bi-box-seam"></i> Inventory
         </a>
@@ -48,8 +51,10 @@
         <a href="{{ route('admin.receptionists.index') }}" class="{{ request()->routeIs('admin.receptionists.*') ? 'active' : '' }}">
             <i class="bi bi-person-lines-fill"></i> Receptionists
         </a>
+
         <a href="#"><i class="bi bi-people"></i> HR</a>
         <a href="#"><i class="bi bi-graph-up"></i> Reports</a>
+
         <form action="" method="POST" class="mt-auto text-center">
             @csrf
             <button type="submit" class="btn btn-danger btn-sm mt-3">
